@@ -68,12 +68,15 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jTextField1 = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         jLblInicial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLblInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLblInicial.setText("Cadastrar Modalidade");
+        jLblInicial.setText("Cadastro de Modalidade");
 
         jButton1.setText("Enviar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +125,6 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(false);
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -157,6 +159,21 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Buscar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Buscar modalidade:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -164,17 +181,23 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField3)
                             .addComponent(jTextField4)
-                            .addComponent(jScrollPane2)))))
+                            .addComponent(jScrollPane2)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton5)
+                                .addGap(0, 0, Short.MAX_VALUE))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,6 +213,11 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -326,7 +354,7 @@ private static String primeiraLetraM(String s) {
                 boolean verifica = true;
                 if (selecao >= 2) {
                     for (int i = 0; i < model.getRowCount(); i++) {
-                        if (jTable1.getValueAt(i, 0).equals(nomeModalidade)) {
+                        if (this.jTable1.getValueAt(i, 0).equals(nomeModalidade)) {
                             verifica = false;
                             JOptionPane.showMessageDialog(this, "Sua modalidade já existe!");
                             break;
@@ -408,6 +436,47 @@ private static String primeiraLetraM(String s) {
         jTable1.setColumnSelectionAllowed(true);
         jTable1.setColumnSelectionInterval(0, 2);
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        ResultSet dados;
+        
+        String busca = jTextField1.getText();
+        
+        dados = conexao.getBusca(busca);
+        
+            try {
+                if (dados.first()) {
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    model.setNumRows(1);
+                    int i = model.getRowCount();
+
+                    for(int x = 1; x < i; x++)
+                        model.removeRow(i);
+                    
+                    
+                    do {
+                        model.setValueAt(dados.getString("nomeModalidade"), model.getRowCount() - 1, 0);
+                        model.setValueAt(dados.getString("numeroHoraMaxima"), model.getRowCount() - 1, 1);
+                        model.setValueAt(dados.getString("observacao"), model.getRowCount() - 1, 2);
+                    
+                        Vector row = new Vector();
+                        row.add("");
+                        row.add("");
+                        row.add("");
+                        model.addRow(row);
+                    } while (dados.next());
+                }
+                else
+                    JOptionPane.showMessageDialog(this, "Não existe essa modalidade!");
+            } catch (SQLException ex) {
+                Logger.getLogger(AdmTelaCriarCertificado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 ////
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -415,9 +484,11 @@ private static String primeiraLetraM(String s) {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLblInicial;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -425,6 +496,7 @@ private static String primeiraLetraM(String s) {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables

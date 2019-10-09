@@ -115,7 +115,42 @@ public class BancoDados {
             JOptionPane.showMessageDialog(null, "Não foi possivel se conectar!\n" + e.getMessage());
         }
     }
+    
+    public ResultSet getBusca(String busca)
+    {
+        if(busca.equals(""))
+        {
+        String select = "select * from modalidade";
+            try {
+                dados = getDados(select);
+            } catch (SQLException ex) {
+                Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try { 
+                if (dados.first())
+                    return dados;
+            } catch (SQLException ex) {
+                Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
+        }
+        else
+        {
+            String select = "select * from modalidade where nomeModalidade = '".concat(busca+"'");
+        try {
+            PreparedStatement in = conexao.prepareStatement(select);
+
+            in.execute();
+            
+            
+            return in.getResultSet();
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        return null;
+    }
+    
     public boolean t() {
         try {
             conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/engenhariasoftware?useTimezone=true&serverTimezone=UTC",

@@ -21,7 +21,7 @@ public class Teste {
        if(conexao.consultaLogin("login", "adm", "adm"))
             System.out.println("Login!");
        
-       conexao.updateModalidade("e","ea","e","e");
+       conexao.getBusca("a");
                     
     }
     
