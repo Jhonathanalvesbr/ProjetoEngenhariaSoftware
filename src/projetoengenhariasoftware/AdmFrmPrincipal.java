@@ -7,6 +7,7 @@ package projetoengenhariasoftware;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.beans.PropertyVetoException;
 import javax.swing.JInternalFrame;
 
@@ -15,14 +16,24 @@ import javax.swing.JInternalFrame;
  * @author aluno
  */
 public class AdmFrmPrincipal extends javax.swing.JFrame {
+    BancoDados conexao;
 
+    public AdmFrmPrincipal(BancoDados conexao) throws HeadlessException {
+        initComponents();
+        setExtendedState(MAXIMIZED_BOTH);
+        
+        
+        this.conexao = conexao;
+        AdmTelaAdministrador frame = new AdmTelaAdministrador(conexao);
+        chamarFrame(frame);
+    }
     /**
      * Creates new form FrmPrincipal
      */
     public AdmFrmPrincipal() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
-        AdmTelaAdministrador frame = new AdmTelaAdministrador();
+        AdmTelaAdministrador frame = new AdmTelaAdministrador(conexao);
         chamarFrame(frame);
     }
 
@@ -102,7 +113,12 @@ public class AdmFrmPrincipal extends javax.swing.JFrame {
         Dimension screenSize = frame.getToolkit().getScreenSize();
         frame.setLocation((screenSize.width - paneSize.width) / 2, (int) ((screenSize.height - paneSize.height) / 2.5));
     }
-
+    
+    public void sair()
+    {
+        setVisible(false);
+        dispose();
+    }
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
@@ -112,48 +128,6 @@ public class AdmFrmPrincipal extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdmFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdmFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdmFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdmFrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmFrmPrincipal tela = new AdmFrmPrincipal();
-                tela.setVisible(true);
-
-                
-
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JDesktopPane jDesktop;

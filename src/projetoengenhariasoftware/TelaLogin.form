@@ -73,14 +73,16 @@
                       <Component id="jLblUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jButtonLimpar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButtonEnviar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jButtonLimpar" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jTxtUsuario" pref="250" max="32767" attributes="0"/>
-                      <Component id="jPasswordField1" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jTxtUsuario" pref="250" max="32767" attributes="0"/>
+                          <Component id="jPasswordField1" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>

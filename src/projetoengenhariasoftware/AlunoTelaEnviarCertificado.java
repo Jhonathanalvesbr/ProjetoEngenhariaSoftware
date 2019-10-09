@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
     BancoDados conexao;
     ResultSet dados;
+    
     Enviar enviar = new Enviar();
     /**
      * Creates new form NewJInternalFrame
@@ -26,10 +27,10 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
     }
     
     public void setConexao(BancoDados conexao){
-        this.conexao = conexao;
+        this.conexao = conexao; 
         setModalidade();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,6 +199,8 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -209,12 +212,12 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Enviar enviar = new Enviar();
         AlunoFrmPrincipal.chamarEnviarCertificado(enviar);
-        
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     private void setModalidade()
     {
         ResultSet dados = null;
+        
         try {
             dados = conexao.getModalidade();
         } catch (SQLException ex) {
@@ -223,13 +226,14 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         try {
             if (dados.first()) {
                 do {
-                    jComboBox1.addItem(dados.getString("modalidade"));
+                    jComboBox1.addItem(dados.getString("nomeModalidade"));
             } while (dados.next());
+                dados.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger(AlunoTelaEnviarCertificado.class.getName()).log(Level.SEVERE, null, ex);
         }
-        dados = null;
+        
     }
     
     private void jComboBox1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusLost

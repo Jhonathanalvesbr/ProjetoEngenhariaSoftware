@@ -5,7 +5,11 @@
  */
 package projetoengenhariasoftware;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -15,14 +19,32 @@ import javax.swing.table.DefaultTableModel;
  * @author aluno
  */
 public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
+    int checkEditar = 0;
+    BancoDados conexao;
 
+    public AdmTelaCriarCertificado(BancoDados conexao) {
+        initComponents();
+        this.conexao = conexao;
+    }
+    
+    public int getCheckEditar() {
+        return checkEditar;
+    }
+
+    public void setCheckEditar(int checkEditar) {
+
+        this.checkEditar = checkEditar;
+    }
+    
+    
+    
     /**
      * Creates new form NewJInternalFrame
      */
     public AdmTelaCriarCertificado() {
         initComponents();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,10 +63,11 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -72,15 +95,9 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setText("Numero maximo de horas:");
+        jLabel2.setText("Numero maximo de horas permitidas:");
 
         jLabel3.setText("Obervação:");
-
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,13 +110,31 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jTable1.setCellSelectionEnabled(true);
+        jTable1.setColumnSelectionAllowed(false);
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTable1FocusLost(evt);
+            }
+        });
         jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -109,25 +144,18 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTable1FocusLost(evt);
-            }
-        });
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
         jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTable1KeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         jLabel1.setText("Nome da modalidade:");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -146,7 +174,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField3)
                             .addComponent(jTextField4)
-                            .addComponent(jTextField5)))))
+                            .addComponent(jScrollPane2)))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,10 +189,9 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jButton4.setText("Sair");
@@ -203,13 +230,13 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
+                    .addComponent(jButton3)
                     .addComponent(jButton4))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -228,7 +255,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 .addComponent(jLblInicial)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -236,10 +263,16 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextArea1.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
-    
-    private void sair()
-    {
+private static String primeiraLetraM(String s) {
+        s = s.toLowerCase();
+        s = s.substring(0, 1).toUpperCase().concat(s.substring(1));
+        return s;
+    }
+    private void sair() {
         dispose();
     }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -248,114 +281,131 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-        if(jTextField3.getText().equals("") || jTextField4.getText().equals("") || jTextField5.getText().equals(""))
-    {
-        JOptionPane.showMessageDialog(null, "Existem campos vazios");
+        try {                                         
+            // TODO add your handling code here:
+            ResultSet dados = null;
+            String nomeModalidade  = jTextField3.getText();
+            String numeroHoras = jTextField4.getText();
+            String observacao = jTextArea1.getText();
+            
+            nomeModalidade = primeiraLetraM(nomeModalidade);
+            numeroHoras = primeiraLetraM(numeroHoras);
+            observacao = primeiraLetraM(observacao);
+            
+            try {
+                dados = conexao.getModalidade();
+            } catch (SQLException ex) {
+                Logger.getLogger(AdmTelaCriarCertificado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            int selecao = jTable1.getSelectedRow();
+            int checkEditar = getCheckEditar();
 
-        
-    }
-    else
-    {
-        JOptionPane.showMessageDialog(this, "Sua modalidade foi criada com sucesso!");
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        
-        model.fireTableCellUpdated(model.getRowCount()-1, model.getColumnCount()-1);
-        
-        for(int x = 0; x < model.getRowCount()-1; x++)
-        {
-            for(int y = 0; y < model.getColumnCount()-1; y++)
-            {
-                model.fireTableCellUpdated(x, y);
+            if (nomeModalidade.equals("") || numeroHoras.equals("")) {
+                JOptionPane.showMessageDialog(null, "Existem campos vazios");
+            } else if (selecao >= 0 && checkEditar == 1 && dados.first()) {
+
+                if (jTable1.getRowCount() > 1 && jTable1.getValueAt(selecao, 0) != null
+                        && !jTable1.getValueAt(selecao, 0).equals(nomeModalidade)
+                        || !jTable1.getValueAt(selecao, 1).equals(numeroHoras)
+                        || !jTable1.getValueAt(selecao, 2).equals(observacao)) {
+                    
+                    conexao.updateModalidade(((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0)), nomeModalidade, numeroHoras, observacao);
+                    
+                    jTable1.setValueAt(nomeModalidade, jTable1.getSelectedRow(), 0);
+                    jTable1.setValueAt(numeroHoras, jTable1.getSelectedRow(), 1);
+                    jTable1.setValueAt(observacao, jTable1.getSelectedRow(), 2);
+                    jTable1.clearSelection();
+                    JOptionPane.showMessageDialog(this, "Sua modalidade foi alterada!");
+                    
+                }
+            } else {
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                selecao = model.getRowCount();
+                
+                boolean verifica = true;
+                if (selecao >= 2) {
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        if (jTable1.getValueAt(i, 0).equals(nomeModalidade)) {
+                            verifica = false;
+                            JOptionPane.showMessageDialog(this, "Sua modalidade já existe!");
+                            break;
+                        }
+                    }
+                }
+                if(dados.first())
+                {
+                    do{
+                            if(nomeModalidade.toLowerCase().equals((dados.getString("nomeModalidade").toLowerCase())))
+                            {
+                                verifica = false;
+                                JOptionPane.showMessageDialog(this, "Sua modalidade já existe!");
+                                break;
+                            }
+                    }while(dados.next());
+                }
+                if (verifica == true && checkEditar == 0) {
+                    
+                    model.fireTableCellUpdated(model.getRowCount() - 1, model.getColumnCount() - 1);
+                    
+                    model.setValueAt(nomeModalidade, model.getRowCount() - 1, 0);
+                    model.setValueAt(numeroHoras, model.getRowCount() - 1, 1);
+                    model.setValueAt(observacao, model.getRowCount() - 1, 2);
+                    JOptionPane.showMessageDialog(this, "Sua modalidade foi criada com sucesso!");
+                    conexao.setModalidade(nomeModalidade, numeroHoras, observacao);
+                    Vector row = new Vector();
+                    row.add("");
+                    row.add("");
+                    row.add("");
+                    model.addRow(row);
+                }
+                
             }
+            setCheckEditar(0);          
+            dados.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdmTelaCriarCertificado.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        model.setValueAt(jTextField3.getText(), model.getRowCount()-1, 0);
-        model.setValueAt(jTextField4.getText(), model.getRowCount()-1, 1);
-        model.setValueAt(jTextField5.getText(), model.getRowCount()-1, 2);
-                Vector row = new Vector();
-                row.add("");
-                row.add("");
-                row.add("");
-                model.addRow(row);
-                
-                
-                
-                for(int x = 0; x < model.getRowCount()-1; x++)
-        {
-            for(int y = 0; y < model.getColumnCount()-1; y++)
-            {
-                model.fireTableCellUpdated(x, y);
-            }
-        }
-    }
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
-    /*DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    
-    AbstractTableModel t = (AbstractTableModel) jTable1.getModel();
-    
-    t.fireTableCellUpdated(0, 0);
-    t.fireTableRowsUpdated(0, 0);
-    t.fireTableDataChanged();
-
-    
-        System.out.println(t.getValueAt(0, 0));
-
-    if(model.getValueAt(model.getRowCount()-1, 0) != null &&
-       (model.getValueAt(model.getRowCount()-1, 1)) != null && 
-            (model.getValueAt(model.getRowCount()-1, 2)) != null)
-    {
-        Vector row = new Vector();
-    row.add("");
-    row.add("");
-    row.add("");
-    model.addRow(row);
-    }
-    else
-    {
-        JOptionPane.showMessageDialog(null, "Existem campos vazios");
-    }*/
-    
-    
-    
+        int i = jTable1.getSelectedRow();
+        if(i > -1)
+        {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            jTextField3.setText((String) model.getValueAt(jTable1.getSelectedRow(), 0));
+            jTextField4.setText((String) model.getValueAt(jTable1.getSelectedRow(), 1));
+            jTextArea1.setText((String) model.getValueAt(jTable1.getSelectedRow(), 2));
+            setCheckEditar(1);
+        }
+        else
+            JOptionPane.showMessageDialog(this, "Selecione um campo para editar!");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jTable1KeyPressed
 
     private void jTable1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusLost
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jTable1FocusLost
 
     private void jPanel2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel2FocusLost
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jPanel2FocusLost
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_jPanel2FocusLost
 
     private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jTable1AncestorAdded
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        
         jTable1.setColumnSelectionAllowed(true);
-        
-
         jTable1.setColumnSelectionInterval(0, 2);
     }//GEN-LAST:event_jTable1MouseClicked
 ////
@@ -372,9 +422,10 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

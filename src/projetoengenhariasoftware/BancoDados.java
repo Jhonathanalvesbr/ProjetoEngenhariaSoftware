@@ -11,7 +11,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
@@ -22,15 +26,15 @@ public class BancoDados {
     Connection conexao;
     ResultSet dados;
     boolean on;
-    
+
     public ResultSet getDados(String select) throws SQLException {
         PreparedStatement s = conexao.prepareStatement(select);
 
         return s.executeQuery();
     }
-    
+
     public boolean consultaLogin(String tabela, String login, String senha) throws SQLException {
-        tabela = "select * from "+tabela;
+        tabela = "select * from " + tabela;
         dados = getDados(tabela);
         if (dados.first()) {
             do {
@@ -47,9 +51,9 @@ public class BancoDados {
         dados.close();
         return false;
     }
-    
+
     public int consultaTipoUsuario(String tabela, String login, String senha) throws SQLException {
-        tabela = "select * from "+tabela;
+        tabela = "select * from " + tabela;
         dados = getDados(tabela);
         if (dados.first()) {
             do {
@@ -61,17 +65,49 @@ public class BancoDados {
         dados.close();
         return 0;
     }
-    
-    public ResultSet getModalidade() throws SQLException
-    {
+
+    public ResultSet getModalidade() throws SQLException {
         dados = getDados("select * from modalidade");
-        
+
         return dados;
     }
+            
+    public void setModalidade(String nomeModalidade, String numeroHoraMaxima, String observacao)
+    {
+        String insert = "insert into modalidade (nomeModalidade, numeroHoraMaxima, observacao) values (?,?,?);";
+        try {
+            PreparedStatement in = conexao.prepareStatement(insert);
+            in.setString(1, nomeModalidade);
+            in.setString(2, numeroHoraMaxima);
+            in.setString(3, observacao);
+            in.execute();
+            in.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
+    public void updateModalidade(String nomeModalidadeAntigo, String nomeModalidadeNovo, String numeroHoraMaxima, String observacao)
+    {
+        String update = "update modalidade set nomeModalidade = ?, numeroHoraMaxima = ?, observacao = ? "
+                + "where nomeModalidade = ?;";
+        try {
+            PreparedStatement in = conexao.prepareStatement(update);
+            in.setString(1, nomeModalidadeNovo);
+            in.setString(2, numeroHoraMaxima);
+            in.setString(3, observacao);
+            in.setString(4, nomeModalidadeAntigo);
+            in.execute();
+            in.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+
     public BancoDados() {
         try {
-            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/eg?useTimezone=true&serverTimezone=UTC",
+            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/engenhariasoftware?useTimezone=true&serverTimezone=UTC",
                     "root", "");
             on = true;
         } catch (HeadlessException | SQLException e) {
@@ -79,22 +115,22 @@ public class BancoDados {
             JOptionPane.showMessageDialog(null, "Não foi possivel se conectar!\n" + e.getMessage());
         }
     }
-    
+
     public boolean t() {
         try {
-            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/eg?useTimezone=true&serverTimezone=UTC",
+            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/engenhariasoftware?useTimezone=true&serverTimezone=UTC",
                     "root", "");
             System.out.println("Conectado!");
             return true;
         } catch (HeadlessException | SQLException e) {
-            
+
             JOptionPane.showMessageDialog(null, "Não foi possivel se conectar!\n" + e.getMessage());
             return false;
         }
     }
 
-    boolean getDados(String select__from_nome, Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
+
+
 
 }

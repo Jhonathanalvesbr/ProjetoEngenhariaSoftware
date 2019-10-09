@@ -5,6 +5,7 @@
  */
 package projetoengenhariasoftware;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -16,9 +17,12 @@ public class Teste {
     public static void main (String[] args) throws SQLException
     {
        BancoDados conexao = new BancoDados();
-        
-       if(conexao.consultaLogin("login", "jhonathan", "32106478"))
+
+       if(conexao.consultaLogin("login", "adm", "adm"))
             System.out.println("Login!");
+       
+       conexao.updateModalidade("e","ea","e","e");
+                    
     }
     
 }

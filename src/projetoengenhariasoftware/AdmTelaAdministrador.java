@@ -10,7 +10,12 @@ package projetoengenhariasoftware;
  * @author aluno
  */
 public class AdmTelaAdministrador extends javax.swing.JInternalFrame {
+    BancoDados conexao;
 
+    public AdmTelaAdministrador(BancoDados conexao) {
+        initComponents();
+        this.conexao = conexao;
+    }
     /**
      * Creates new form NewJInternalFrame
      */
@@ -135,7 +140,7 @@ public class AdmTelaAdministrador extends javax.swing.JInternalFrame {
 
     private void jButtonEnviarHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarHorasActionPerformed
         // TODO add your handling code here:
-        AdmTelaCriarCertificado tela = new AdmTelaCriarCertificado();
+        AdmTelaCriarCertificado tela = new AdmTelaCriarCertificado(conexao);
         AdmFrmPrincipal.chamarFrame(tela);
         
     }//GEN-LAST:event_jButtonEnviarHorasActionPerformed
@@ -144,6 +149,7 @@ public class AdmTelaAdministrador extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         setVisible(false);
         dispose();
+        AdmFrmPrincipal sair;
     }//GEN-LAST:event_jButtonSairActionPerformed
 
 

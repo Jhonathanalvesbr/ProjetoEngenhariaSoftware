@@ -10,12 +10,19 @@ package projetoengenhariasoftware;
  * @author aluno
  */
 public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
-
+    
+    BancoDados conexao;
+    
+    public void setConexao(BancoDados conexao) {
+        this.conexao = conexao;
+    }
+    
     /**
      * Creates new form NewJInternalFrame
      */
-    public AlunoTelaUsuario() {
+    public AlunoTelaUsuario(BancoDados conexao) {
         initComponents();
+        setConexao(conexao);
     }
 
     /**
@@ -66,6 +73,11 @@ public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
         });
 
         jButtonSair.setText("Sair");
+        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -147,9 +159,14 @@ public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
     private void jButtonEnviarHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarHorasActionPerformed
         // TODO add your handling code here:
         AlunoTelaEnviarCertificado tela = new AlunoTelaEnviarCertificado();
+        tela.setConexao(conexao);
         AlunoFrmPrincipal.chamarEnviarCertificado(tela);
-
     }//GEN-LAST:event_jButtonEnviarHorasActionPerformed
+
+    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButtonSairActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

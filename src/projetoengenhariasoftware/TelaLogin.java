@@ -33,8 +33,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }
     
     private void login() throws SQLException {
-        if(!conexao.on)
-            System.out.println("aaaaaaaaaaaaaa");
         if (jTxtUsuario.getText().equals("") && jPasswordField1.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Digite usuário e senha.");
         } else if (jTxtUsuario.getText().equals("")) {
@@ -46,12 +44,12 @@ public class TelaLogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Nome de usuário ou senha inválidos!");
             } else {
                 if (conexao.consultaTipoUsuario("login", jTxtUsuario.getText().toLowerCase(), jPasswordField1.getText()) == 1) {
-                    AdmFrmPrincipal tela = new AdmFrmPrincipal();
+                    AdmFrmPrincipal tela = new AdmFrmPrincipal(conexao);
                     tela.setVisible(true);
 
                 } else {
-                    AlunoFrmPrincipal tela = new AlunoFrmPrincipal();
-                    tela.setConexao(conexao);
+                    AlunoFrmPrincipal tela = new AlunoFrmPrincipal(conexao);
+
                     tela.setVisible(true);
                 }
                 setVisible(false);
@@ -146,13 +144,14 @@ public class TelaLogin extends javax.swing.JFrame {
                     .addComponent(jLblSenha)
                     .addComponent(jLblUsuario))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButtonLimpar)
+                        .addComponent(jButtonEnviar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonEnviar))
-                    .addComponent(jTxtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jPasswordField1))
+                        .addComponent(jButtonLimpar))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jTxtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                        .addComponent(jPasswordField1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jCheckBox1)
                 .addContainerGap())
@@ -260,38 +259,7 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                TelaLogin tela = new TelaLogin();
-                tela.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEnviar;
