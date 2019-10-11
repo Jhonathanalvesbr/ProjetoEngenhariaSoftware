@@ -5,6 +5,8 @@
  */
 package projetoengenhariasoftware;
 
+import java.io.File;
+
 /**
  *
  * @author Administrador
@@ -56,7 +58,16 @@ public class Enviar extends javax.swing.JInternalFrame {
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
         // TODO add your handling code here:
-        
+
+            File arq = null;
+            arq = jFileChooser1.getSelectedFile().getAbsoluteFile();
+            if(arq != null)
+            {
+                AlunoTelaEnviarCertificado.setArquivo(arq);
+            }
+            
+            
+        dispose();
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
 

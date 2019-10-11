@@ -21,8 +21,7 @@ public class Teste {
        if(conexao.consultaLogin("login", "adm", "adm"))
             System.out.println("Login!");
        
-       conexao.getBusca("a");
-                    
+       conexao.getNome("a", 0);
     }
     
 }

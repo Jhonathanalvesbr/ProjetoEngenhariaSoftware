@@ -20,7 +20,16 @@ import javax.swing.JInternalFrame;
 public class AlunoFrmPrincipal extends javax.swing.JFrame {
 
     BancoDados conexao;
+    String nomeAluno;
 
+    public String getNomeAluno() {
+        return nomeAluno;
+    }
+
+    public void setNomeAluno(String nomeAluno) {
+        this.nomeAluno = nomeAluno;
+    }
+    
     public void setConexao(BancoDados conexao) {
         this.conexao = conexao;
     }

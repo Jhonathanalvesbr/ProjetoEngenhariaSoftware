@@ -51,7 +51,33 @@ public class BancoDados {
         dados.close();
         return false;
     }
+    
+    public String getNome(String login, int tipoUser)
+    {
+       if(tipoUser == 0)
+       {
+           String select = "select a.nomeAluno from aluno a, login l\n" +
+                            "where l.idLogin = (select idLogin from login where login = ?)";
+        try {
+            PreparedStatement in = conexao.prepareStatement(select);
+            in.setString(1, login);
+            ResultSet r = in.executeQuery();
+            r.first();
+            String nome = r.getString(1);
+            r.close();
+            in.close();
+            
+            return nome;
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+       }
+       
+       return null;
+    }
+    
+    
     public int consultaTipoUsuario(String tabela, String login, String senha) throws SQLException {
         tabela = "select * from " + tabela;
         dados = getDados(tabela);
