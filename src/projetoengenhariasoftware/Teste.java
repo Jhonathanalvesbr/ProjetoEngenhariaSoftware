@@ -21,7 +21,7 @@ public class Teste {
        if(conexao.consultaLogin("login", "adm", "adm"))
             System.out.println("Login!");
        
-       conexao.getNome("a", 0);
+       conexao.getNome("j", 0);
     }
     
 }
