@@ -19,7 +19,17 @@ public class TelaLogin extends javax.swing.JFrame {
 
     BancoDados conexao = new BancoDados();
     
+    static int id;
 
+    public static int getId() {
+        return id;
+    }
+
+    public static void setId(int id) {
+        TelaLogin.id = id;
+    }
+
+   
    
 
     /**
@@ -31,6 +41,8 @@ public class TelaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
     }
+    
+    
     
     private void login() throws SQLException {
         if (jTxtUsuario.getText().equals("") && jPasswordField1.getText().equals("")) {
@@ -49,8 +61,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
                 } else {
                     AlunoFrmPrincipal tela = new AlunoFrmPrincipal(conexao);
-
                     tela.setVisible(true);
+                    tela.setNomeAluno(conexao.getNome(jTxtUsuario.getText(), 0));
                 }
                 setVisible(false);
                 dispose();
