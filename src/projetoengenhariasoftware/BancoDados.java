@@ -56,17 +56,17 @@ public class BancoDados {
     {
        if(tipoUser == 0)
        {
-           String select = "select a.nomeAluno from aluno a, login l\n" +
-                            "where l.idLogin = (select idLogin from login where login = ?)";
+           String select = "select a.nomeAluno from aluno a, login l where l.idLogin = (select idLogin from login where login = ?) and a.idLogin = (select idLogin from login where login = ?)";
         try {
             PreparedStatement in = conexao.prepareStatement(select);
             in.setString(1, login);
+            in.setString(2, login);
             ResultSet r = in.executeQuery();
             r.first();
             String nome = r.getString(1);
             r.close();
             in.close();
-            
+            System.out.println(nome);
             return nome;
         } catch (SQLException ex) {
             Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
