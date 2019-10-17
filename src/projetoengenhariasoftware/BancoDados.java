@@ -67,7 +67,28 @@ public class BancoDados {
 
         return false;
     }
-
+    
+    public String getValidar(String nome) {
+            String select = "select c.horasModalidade, c.dataEnvio, c.statusProcesso from certificado c, aluno a\n" +
+"where a.idAluno = (select idAluno from aluno where nomeAluno = ?) and\n" +
+" c.idAluno = (select idAluno from aluno where nomeAluno = ?);";
+            try {
+                PreparedStatement in = conexao.prepareStatement(select);
+                in.setString(1, nome);
+                in.setString(2, nome);
+                ResultSet resultadoSelect = in.executeQuery();
+                resultadoSelect.first();
+                String n = resultadoSelect.getString(1);
+                resultadoSelect.close();
+                in.close();
+                return n;
+            } catch (SQLException ex) {
+                Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        return null;
+    }
+    
     public String getNome(String login, int tipoUser) {
         if (tipoUser == 0) {
             String select = "select a.nomeAluno from aluno a, login l where l.idLogin = (select idLogin from login where login = ?) and a.idLogin = (select idLogin from login where login = ?)";
@@ -84,9 +105,7 @@ public class BancoDados {
             } catch (SQLException ex) {
                 Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
-
         return null;
     }
 
@@ -163,7 +182,7 @@ public class BancoDados {
     }
     
     public void setCertificado(int idAluno, int idModalidade, String horas, String data) {
-        String insert = "insert into certificado (idAluno, idModalidade, horasModalidade, dataEnvio, StatusProcesso) values(?,?,?,?,?);";
+        String insert = "insert into certificado (idAluno, idModalidade, horasModalidade, dataEnvio, statusProcesso) values(?,?,?,?,?);";
         try {
             PreparedStatement in = conexao.prepareStatement(insert);
             in.setInt(1, idAluno);
