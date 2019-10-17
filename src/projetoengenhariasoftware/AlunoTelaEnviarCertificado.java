@@ -8,8 +8,12 @@ package projetoengenhariasoftware;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,27 +24,27 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
     BancoDados conexao;
     ResultSet dados;
     static File arquivo = null;
-
-    public static void setArquivo(File arquivo) {
+    String nome;
+    /**
+     * Creates new form NewJInternalFrame
+     */
+    public AlunoTelaEnviarCertificado(String nome) {
+        this.nome = nome;
+        initComponents();
+    }
+    
+        public static void setArquivo(File arquivo) {
         AlunoTelaEnviarCertificado.arquivo = arquivo;
         String s = arquivo.getName();
         
         jTextField2.setText(s);
         jTextField2.setCaretPosition(0);
-    }
-    
-
-    public File getArquivo() {
+}
+        
+            public File getArquivo() {
         return arquivo;
-    }
-    
-    /**
-     * Creates new form NewJInternalFrame
-     */
-    public AlunoTelaEnviarCertificado() {
-        initComponents();
-    }
-    
+}
+            
     public void setConexao(BancoDados conexao){
         this.conexao = conexao; 
         setModalidade();
@@ -60,7 +64,7 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -72,12 +76,12 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         jLblInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLblInicial.setText("Enviar Certificado");
         jLblInicial.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jLblInicialAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
 
@@ -126,6 +130,11 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         });
 
         jTextField2.setEditable(false);
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -135,14 +144,13 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField2)))
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -154,7 +162,7 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jTextField1)
-                            .addComponent(jComboBox1, 0, 190, Short.MAX_VALUE))))
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18))
         );
         jPanel2Layout.setVerticalGroup(
@@ -198,7 +206,7 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLblInicial, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+            .addComponent(jLblInicial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -218,7 +226,6 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        arquivo = null;
         setVisible(false);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -234,23 +241,22 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         AlunoFrmPrincipal.chamarEnviarCertificado(enviar);
     }//GEN-LAST:event_jButton2ActionPerformed
     
-    
-    
     private void setModalidade()
     {
         ResultSet dados = null;
         
-        try {
-            dados = conexao.getModalidade();
-        } catch (SQLException ex) {
-            Logger.getLogger(AlunoTelaEnviarCertificado.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        dados = conexao.getModalidade();
         try {
             if (dados.first()) {
+                ArrayList item = new ArrayList();
                 do {
-                    jComboBox1.addItem(dados.getString("nomeModalidade"));
+                    item.add(dados.getString("nomeModalidade"));
             } while (dados.next());
                 dados.close();
+                Collections.sort(item);
+                for(int x = 0; x < item.size(); x++)
+                    jComboBox1.addItem(item.get(x).toString());
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(AlunoTelaEnviarCertificado.class.getName()).log(Level.SEVERE, null, ex);
@@ -270,27 +276,24 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
-        if(jComboBox1.getSelectedItem() == null)
-        {
-            JOptionPane.showMessageDialog(null, "Selecione uma modalidade!");
-        }
-        else if(arquivo == null)
-        {
-            JOptionPane.showMessageDialog(null, "Escolha um arquivo!");
-        }
-        else
-        {
-            arquivo = null;
-            setVisible(false);
-            dispose();
-        }
-        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+        LocalDateTime now = LocalDateTime.now();
+        String data = (String) dtf.format(now);
+        int idAluno = conexao.getIdAluno(nome);
+        int idModalidade= conexao.getIdModalidade(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
+        String horas = jTextField1.getText();
+        conexao.setCertificado(idAluno,idModalidade, horas, data);
+        conexao.setModalidadeAluno(idAluno, idModalidade);
+        JOptionPane.showMessageDialog(null, "Certificado enviado com sucesso!");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     public Enviar enviarCertificado(Enviar enviar)
     {

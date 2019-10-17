@@ -12,6 +12,7 @@ package projetoengenhariasoftware;
 public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
     
     BancoDados conexao;
+    String nome;
     
     public void setConexao(BancoDados conexao) {
         this.conexao = conexao;
@@ -20,7 +21,8 @@ public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
     /**
      * Creates new form NewJInternalFrame
      */
-    public AlunoTelaUsuario(BancoDados conexao) {
+    public AlunoTelaUsuario(BancoDados conexao, String nome) {
+        this.nome = nome;
         initComponents();
         setConexao(conexao);
     }
@@ -158,7 +160,7 @@ public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
 
     private void jButtonEnviarHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarHorasActionPerformed
         // TODO add your handling code here:
-        AlunoTelaEnviarCertificado tela = new AlunoTelaEnviarCertificado();
+        AlunoTelaEnviarCertificado tela = new AlunoTelaEnviarCertificado(nome);
         tela.setConexao(conexao);
         AlunoFrmPrincipal.chamarEnviarCertificado(tela);
     }//GEN-LAST:event_jButtonEnviarHorasActionPerformed

@@ -26,80 +26,95 @@ public class BancoDados {
     Connection conexao;
     ResultSet dados;
     boolean on;
-
-    public ResultSet getDados(String select) throws SQLException {
-        PreparedStatement s = conexao.prepareStatement(select);
-
-        return s.executeQuery();
-    }
-
-    public boolean consultaLogin(String tabela, String login, String senha) throws SQLException {
-        tabela = "select * from " + tabela;
-        dados = getDados(tabela);
-        if (dados.first()) {
-            do {
-                if (login.equals(dados.getString("login").toLowerCase())) {
-                    do {
-                        if (senha.equals(dados.getString("senha"))) {
-                            dados.close();
-                            return true;
-                        }
-                    } while (dados.next());
-                }
-            } while (dados.next());
+   
+    public ResultSet getModalidade() {
+        String select = "select * from modalidade";
+        PreparedStatement in;
+        try {
+            in = conexao.prepareStatement(select);
+            return in.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        dados.close();
-        return false;
+        return null;
     }
     
-    public String getNome(String login, int tipoUser)
-    {
-       if(tipoUser == 0)
-       {
-           String select = "select a.nomeAluno from aluno a, login l where l.idLogin = (select idLogin from login where login = ?) and a.idLogin = (select idLogin from login where login = ?)";
+    public boolean consultaLogin(String login, String senha) {
+        String select = "select * from login";
         try {
             PreparedStatement in = conexao.prepareStatement(select);
-            in.setString(1, login);
-            in.setString(2, login);
-            ResultSet r = in.executeQuery();
-            r.first();
-            String nome = r.getString(1);
-            r.close();
+
+            ResultSet resultadoSelect = in.executeQuery();
+
+            if (resultadoSelect.first()) {
+                do {
+                    if (login.equals(resultadoSelect.getString("login").toLowerCase())) {
+                        do {
+                            if (senha.equals(resultadoSelect.getString("senha"))) {
+                                in.close();
+                                resultadoSelect.close();
+                                return true;
+                            }
+                        } while (resultadoSelect.next());
+                    }
+                } while (resultadoSelect.next());
+            }
             in.close();
-            System.out.println(nome);
-            return nome;
+            resultadoSelect.close();
         } catch (SQLException ex) {
             Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-       }
-       
-       return null;
+        return false;
     }
-    
-    
-    public int consultaTipoUsuario(String tabela, String login, String senha) throws SQLException {
-        tabela = "select * from " + tabela;
-        dados = getDados(tabela);
-        if (dados.first()) {
-            do {
-                if (login.equals(dados.getString("login").toLowerCase())) {
-                    return dados.getInt("tipo");
-                }
-            } while (dados.next());
+
+    public String getNome(String login, int tipoUser) {
+        if (tipoUser == 0) {
+            String select = "select a.nomeAluno from aluno a, login l where l.idLogin = (select idLogin from login where login = ?) and a.idLogin = (select idLogin from login where login = ?)";
+            try {
+                PreparedStatement in = conexao.prepareStatement(select);
+                in.setString(1, login);
+                in.setString(2, login);
+                ResultSet resultadoSelect = in.executeQuery();
+                resultadoSelect.first();
+                String nome = resultadoSelect.getString(1);
+                resultadoSelect.close();
+                in.close();
+                return nome;
+            } catch (SQLException ex) {
+                Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
-        dados.close();
-        return 0;
+
+        return null;
     }
 
-    public ResultSet getModalidade() throws SQLException {
-        dados = getDados("select * from modalidade");
+    public int consultaTipoUsuario(String login, String senha) {
+        String select = "select * from login";
+        PreparedStatement in;
+        try {
+            in = conexao.prepareStatement(select);
+            ResultSet resultadoSelect = in.executeQuery();
+            if (resultadoSelect.first()) {
+                do {
+                    if (login.equals(resultadoSelect.getString("login").toLowerCase())) {
+                        int tipo = resultadoSelect.getInt("tipo");
+                        in.execute();
+                        resultadoSelect.close();
+                        in.close();
+                        return tipo;
+                    }
+                } while (resultadoSelect.next());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        return dados;
+        return -1;
     }
-            
-    public void setModalidade(String nomeModalidade, String numeroHoraMaxima, String observacao)
-    {
+
+    public void setModalidade(String nomeModalidade, String numeroHoraMaxima, String observacao) {
         String insert = "insert into modalidade (nomeModalidade, numeroHoraMaxima, observacao) values (?,?,?);";
         try {
             PreparedStatement in = conexao.prepareStatement(insert);
@@ -113,8 +128,70 @@ public class BancoDados {
         }
     }
     
-    public void updateModalidade(String nomeModalidadeAntigo, String nomeModalidadeNovo, String numeroHoraMaxima, String observacao)
+    int getIdAluno(String aluno)
     {
+        String select = "select idAluno from aluno where nomeAluno = ?;";
+        try {
+            PreparedStatement in = conexao.prepareStatement(select);
+            in.setString(1, aluno);
+            ResultSet resultadoSelect = in.executeQuery();
+            resultadoSelect.first();
+            int idAluno = resultadoSelect.getInt("idAluno");
+            in.close();
+            return idAluno;
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
+    int getIdModalidade(String modalidade)
+    {
+        String select = "select idModalidade from modalidade where nomeModalidade = ?;";
+        try {
+            PreparedStatement in = conexao.prepareStatement(select);
+            in.setString(1, modalidade);
+            ResultSet resultadoSelect = in.executeQuery();
+            resultadoSelect.first();
+            int idAluno = resultadoSelect.getInt("idModalidade");
+            in.close();
+            return idAluno;
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
+    public void setCertificado(int idAluno, int idModalidade, String horas, String data) {
+        String insert = "insert into certificado (idAluno, idModalidade, horasModalidade, dataEnvio, StatusProcesso) values(?,?,?,?,?);";
+        try {
+            PreparedStatement in = conexao.prepareStatement(insert);
+            in.setInt(1, idAluno);
+            in.setInt(2, idModalidade);
+            in.setString(3, horas);
+            in.setString(4, data);
+            in.setString(5,"0");
+            in.execute();
+            in.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+        public void setModalidadeAluno(int idAluno, int idModalidade) {
+        String insert = "insert into modalidadealuno (idAluno, idModalidade) values(?,?);";
+        try {
+            PreparedStatement in = conexao.prepareStatement(insert);
+            in.setInt(1, idAluno);
+            in.setInt(2, idModalidade);
+            in.execute();
+            in.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateModalidade(String nomeModalidadeAntigo, String nomeModalidadeNovo, String numeroHoraMaxima, String observacao) {
         String update = "update modalidade set nomeModalidade = ?, numeroHoraMaxima = ?, observacao = ? "
                 + "where nomeModalidade = ?;";
         try {
@@ -130,6 +207,16 @@ public class BancoDados {
         }
     }
     
+    public void deleteModalidade(String nomeModalidade) {
+        String delete = "delete from modalidade where nomeModalidade = '"+nomeModalidade+"';";
+        try {
+            PreparedStatement in = conexao.prepareStatement(delete);
+            in.execute();
+            in.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public BancoDados() {
         try {
@@ -138,60 +225,34 @@ public class BancoDados {
             on = true;
         } catch (HeadlessException | SQLException e) {
             on = false;
-            JOptionPane.showMessageDialog(null, "Não foi possivel se conectar!\n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Não foi possivel se conectar com o banco de dados!\n\n" + e.getMessage());
         }
     }
-    
-    public ResultSet getBusca(String busca)
-    {
-        if(busca.equals(""))
-        {
-        String select = "select * from modalidade";
+
+    public ResultSet getBusca(String busca) {
+        if (busca.equals("")) {
+            String select = "select * from modalidade";
+            PreparedStatement in;
             try {
-                dados = getDados(select);
-            } catch (SQLException ex) {
-                Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try { 
-                if (dados.first())
-                    return dados;
+                in = conexao.prepareStatement(select);
+                return in.executeQuery();
+                
             } catch (SQLException ex) {
                 Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        }
-        else
-        {
-            String select = "select * from modalidade where nomeModalidade = '".concat(busca+"'");
-        try {
-            PreparedStatement in = conexao.prepareStatement(select);
+        } else {
+            String select = "select * from modalidade where nomeModalidade like('".concat(busca + "%')");
+            try {
+                PreparedStatement in = conexao.prepareStatement(select);
 
-            in.execute();
-            
-            
-            return in.getResultSet();
-        } catch (SQLException ex) {
-            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                in.execute();
+
+                return in.getResultSet();
+            } catch (SQLException ex) {
+                Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return null;
     }
-    
-    public boolean t() {
-        try {
-            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/engenhariasoftware?useTimezone=true&serverTimezone=UTC",
-                    "root", "");
-            System.out.println("Conectado!");
-            return true;
-        } catch (HeadlessException | SQLException e) {
-
-            JOptionPane.showMessageDialog(null, "Não foi possivel se conectar!\n" + e.getMessage());
-            return false;
-        }
-    }
-
-
-
-
-
 }

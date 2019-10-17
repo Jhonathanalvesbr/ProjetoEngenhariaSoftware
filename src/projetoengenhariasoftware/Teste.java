@@ -5,23 +5,34 @@
  */
 package projetoengenhariasoftware;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import static javax.print.attribute.Size2DSyntax.MM;
+import javax.swing.JLabel;
 
 /**
  *
  * @author aluno
  */
 public class Teste {
-    
-    public static void main (String[] args) throws SQLException
-    {
-       BancoDados conexao = new BancoDados();
 
-       if(conexao.consultaLogin("login", "adm", "adm"))
+    public static void main(String[] args) throws SQLException {
+        BancoDados conexao = new BancoDados();
+
+        if (conexao.consultaLogin("adm", "adm")) {
             System.out.println("Login!");
-       
-       conexao.getNome("j", 0);
+        }
+        
+        conexao.setCertificado(1,1,"100","nn");
+
     }
-    
 }
+
+

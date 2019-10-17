@@ -17,19 +17,17 @@ import javax.swing.JOptionPane;
  */
 public class TelaLogin extends javax.swing.JFrame {
 
-    BancoDados conexao = new BancoDados();
+    BancoDados conexao;
+
+    public BancoDados getConexao() {
+        return conexao;
+    }
+
+    public void setConexao(BancoDados conexao) {
+        this.conexao = conexao;
+    }
     
-    static int id;
 
-    public static int getId() {
-        return id;
-    }
-
-    public static void setId(int id) {
-        TelaLogin.id = id;
-    }
-
-   
    
 
     /**
@@ -42,8 +40,6 @@ public class TelaLogin extends javax.swing.JFrame {
         setResizable(false);
     }
     
-    
-    
     private void login() throws SQLException {
         if (jTxtUsuario.getText().equals("") && jPasswordField1.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Digite usuário e senha.");
@@ -52,17 +48,21 @@ public class TelaLogin extends javax.swing.JFrame {
         } else if (jPasswordField1.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Digite a senha.");
         } else {
-            if (!conexao.consultaLogin("login", jTxtUsuario.getText().toLowerCase(), jPasswordField1.getText())) {
+            if (!conexao.consultaLogin(jTxtUsuario.getText().toLowerCase(), jPasswordField1.getText())) {
                 JOptionPane.showMessageDialog(null, "Nome de usuário ou senha inválidos!");
             } else {
-                if (conexao.consultaTipoUsuario("login", jTxtUsuario.getText().toLowerCase(), jPasswordField1.getText()) == 1) {
+                if (conexao.consultaTipoUsuario(jTxtUsuario.getText().toLowerCase(), jPasswordField1.getText()) == 1) {
                     AdmFrmPrincipal tela = new AdmFrmPrincipal(conexao);
                     tela.setVisible(true);
 
-                } else {
-                    AlunoFrmPrincipal tela = new AlunoFrmPrincipal(conexao);
+                } else if(conexao.consultaTipoUsuario(jTxtUsuario.getText().toLowerCase(), jPasswordField1.getText()) == 0){
+                    AlunoFrmPrincipal tela = new AlunoFrmPrincipal(conexao,conexao.getNome(jTxtUsuario.getText().toLowerCase(), 0));
                     tela.setVisible(true);
-                    tela.setNomeAluno(conexao.getNome(jTxtUsuario.getText(), 0));
+                }
+                else
+                {
+                    ResponsavelFrmPrincipal tela = new ResponsavelFrmPrincipal(conexao);
+                    tela.setVisible(true);
                 }
                 setVisible(false);
                 dispose();

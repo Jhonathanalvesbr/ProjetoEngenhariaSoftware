@@ -15,15 +15,24 @@ import javax.swing.JInternalFrame;
  * @author aluno
  */
 public class ResponsavelFrmPrincipal extends javax.swing.JFrame {
-    
+    BancoDados conexao;
+
+    public BancoDados getConexao() {
+        return conexao;
+    }
+
+    public void setConexao(BancoDados conexao) {
+        this.conexao = conexao;
+    }
     boolean ativo = false;
 
     /**
      * Creates new form FrmPrincipal
      */
-    public ResponsavelFrmPrincipal() {
+    public ResponsavelFrmPrincipal(BancoDados conexao) {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        this.conexao = conexao;
     }
     
     
@@ -112,7 +121,8 @@ public class ResponsavelFrmPrincipal extends javax.swing.JFrame {
     
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        chamarEnviarCertificado(new ResponsavelTelaCertificado());
+        ResponsavelTelaCertificado tela = new ResponsavelTelaCertificado(conexao);
+        chamarEnviarCertificado(tela);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     

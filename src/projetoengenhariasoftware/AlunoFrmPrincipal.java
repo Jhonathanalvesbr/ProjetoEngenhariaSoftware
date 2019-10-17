@@ -20,15 +20,7 @@ import javax.swing.JInternalFrame;
 public class AlunoFrmPrincipal extends javax.swing.JFrame {
 
     BancoDados conexao;
-    String nomeAluno;
-
-    public String getNomeAluno() {
-        return nomeAluno;
-    }
-
-    public void setNomeAluno(String nomeAluno) {
-        this.nomeAluno = nomeAluno;
-    }
+    String nome;
     
     public void setConexao(BancoDados conexao) {
         this.conexao = conexao;
@@ -37,10 +29,11 @@ public class AlunoFrmPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form FrmPrincipal
      */
-    public AlunoFrmPrincipal(BancoDados conexao) {
+    public AlunoFrmPrincipal(BancoDados conexao, String nome) {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
-        AlunoTelaUsuario frame = new AlunoTelaUsuario(conexao);
+        this.nome = nome;
+        AlunoTelaUsuario frame = new AlunoTelaUsuario(conexao, nome);
         frame.setConexao(conexao);
         chamarFrame(frame);
         
@@ -141,7 +134,7 @@ public class AlunoFrmPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        AlunoTelaEnviarCertificado aluno = new AlunoTelaEnviarCertificado();
+        AlunoTelaEnviarCertificado aluno = new AlunoTelaEnviarCertificado(nome);
         chamarEnviarCertificado(aluno);
         aluno.setConexao(conexao);
     }//GEN-LAST:event_jMenuItem1ActionPerformed

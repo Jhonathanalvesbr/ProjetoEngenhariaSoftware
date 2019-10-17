@@ -19,9 +19,18 @@ public class ProjetoEngenhariaSoftware {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-
-        TelaLogin tela = new TelaLogin();
-        tela.setVisible(true);
+        BancoDados conexao = new BancoDados();
+        
+        if(conexao.on)
+        {
+            TelaLogin tela = new TelaLogin();
+            tela.setVisible(true);
+            tela.setConexao(conexao);
+        }
+        else
+        {
+            
+        }
         /*Teste t = new Teste();
          try {
          t.main(args);

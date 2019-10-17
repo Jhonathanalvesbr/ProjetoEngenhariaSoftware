@@ -5,6 +5,12 @@
  */
 package projetoengenhariasoftware;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,15 +18,38 @@ import javax.swing.JOptionPane;
  * @author aluno
  */
 public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
-
+    BancoDados conexao;
     /**
      * Creates new form NewJInternalFrame
      */
-    public ResponsavelTelaCertificado() {
+    public ResponsavelTelaCertificado(BancoDados conexao) {
         initComponents();
         jPanel3.setVisible(false);
+        this.conexao = conexao;
+        setModalidade();
     }
+    private void setModalidade()
+    {
+        ResultSet dados = null;
+        
+        dados = conexao.getModalidade();
+        try {
+            if (dados.first()) {
+                ArrayList item = new ArrayList();
+                do {
+                    item.add(dados.getString("nomeModalidade"));
+            } while (dados.next());
+                dados.close();
+                Collections.sort(item);
+                for(int x = 0; x < item.size(); x++)
+                    jComboBox1.addItem(item.get(x).toString());
 
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunoTelaEnviarCertificado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,10 +65,10 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
         jLblInicial = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<String>();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
@@ -69,7 +98,6 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Modalidade:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -99,7 +127,7 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Pendente: ");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -253,6 +281,7 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

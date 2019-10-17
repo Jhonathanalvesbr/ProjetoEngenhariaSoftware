@@ -6,6 +6,8 @@
 package projetoengenhariasoftware;
 
 import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -18,6 +20,9 @@ public class Enviar extends javax.swing.JInternalFrame {
      */
     public Enviar() {
         initComponents();
+        jFileChooser1.setFileSelectionMode(jFileChooser1.FILES_ONLY);
+        jFileChooser1.setFileFilter(new FileNameExtensionFilter("Excel 97", "xls"));
+
     }
 
     /**
@@ -41,16 +46,16 @@ public class Enviar extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -58,15 +63,21 @@ public class Enviar extends javax.swing.JInternalFrame {
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
         // TODO add your handling code here:
+        File file = jFileChooser1.getSelectedFile();
+        File arq = null;
+        if (file != null) {
 
-            File arq = null;
+            AlunoTelaEnviarCertificado.jTextField2.setText(file.getPath());
             arq = jFileChooser1.getSelectedFile().getAbsoluteFile();
-            if(arq != null)
-            {
-                AlunoTelaEnviarCertificado.setArquivo(arq);
-            }
-            
-            
+        } else {
+            AlunoTelaEnviarCertificado.jTextField2.setText("");
+        }
+        if (arq != null) {
+            AlunoTelaEnviarCertificado.setArquivo(arq);
+        }
+
+        dispose();
+        setVisible(false);
         dispose();
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
