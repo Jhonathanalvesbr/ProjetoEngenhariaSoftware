@@ -33,9 +33,9 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
         setModalidade();
         String item = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        ArrayList<Validar> validar;
-        System.out.println(item);
-        validar = conexao.getValidar("Jhonathan Alves", item);
+        ArrayList<Validar> validar = new ArrayList();
+        
+        conexao.getValidar("Jhonathan Alves", item, validar);
         if (validar != null) {
             for (int i = 0; i < validar.size(); i++) {
                 Vector row = new Vector();
