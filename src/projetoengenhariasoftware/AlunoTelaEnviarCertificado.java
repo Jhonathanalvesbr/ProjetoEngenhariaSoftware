@@ -8,8 +8,8 @@ package projetoengenhariasoftware;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+/*import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;*/
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -276,9 +276,9 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
-        LocalDateTime now = LocalDateTime.now();
-        String data = (String) dtf.format(now);
+        /*DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+        LocalDateTime now = LocalDateTime.now();*/
+        String data =  "2019/08/10";//(String) dtf.format(now);
         int idAluno = conexao.getIdAluno(nome);
         int idModalidade= conexao.getIdModalidade(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
         String horas = jTextField1.getText();

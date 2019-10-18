@@ -9,8 +9,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,8 +28,20 @@ public class Teste {
         if (conexao.consultaLogin("adm", "adm")) {
             System.out.println("Login!");
         }
+        ArrayList<Validar> validar = new ArrayList();
         
-        conexao.setCertificado(1,1,"100","nn");
+        conexao.getValidar("Jhonathan Alves", "Asdf", validar);
+        if(validar != null)
+        {
+            System.out.println(validar.get(0).getNome());
+            System.out.println(validar.get(0).getCurso());
+            System.out.println(validar.get(0).getHoras());
+            System.out.println(validar.get(0).getStatus());
+            System.out.println(validar.get(0).getDataEnvio());
+        }
+        
+        
+        
 
     }
 }
