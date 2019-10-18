@@ -138,16 +138,6 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
         });
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
-        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTable1FocusLost(evt);
-            }
-        });
         jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -155,6 +145,16 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 jTable1AncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTable1FocusLost(evt);
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -195,7 +195,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
                 .addGap(6, 6, 6))
         );
         jPanel3Layout.setVerticalGroup(
@@ -403,7 +403,12 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                     } while (dados.next());
                 }
                 if (verifica == true && checkEditar == 0) {
-
+                    Vector row = new Vector();
+                    row.add("");
+                    row.add("");
+                    row.add("");
+                    model.addRow(row);
+                    
                     model.fireTableCellUpdated(model.getRowCount() - 1, model.getColumnCount() - 1);
 
                     model.setValueAt(nomeModalidade, model.getRowCount() - 1, 0);
@@ -411,11 +416,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                     model.setValueAt(observacao, model.getRowCount() - 1, 2);
                     JOptionPane.showMessageDialog(this, "Sua modalidade foi criada com sucesso!");
                     conexao.setModalidade(nomeModalidade, numeroHoras, observacao);
-                    Vector row = new Vector();
-                    row.add("");
-                    row.add("");
-                    row.add("");
-                    model.addRow(row);
+                    
                 }
 
             }
