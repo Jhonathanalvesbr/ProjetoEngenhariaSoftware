@@ -30,14 +30,15 @@ public class Teste {
         }
         ArrayList<Validar> validar = new ArrayList();
         
-        conexao.getValidar("Jhonathan Alves", "Asdf", validar);
-        if(validar != null)
+        conexao.getValidar("Jhonathan Alves", "Curso", validar);
+        for(int i = 0; i < validar.size(); i++)
         {
-            System.out.println(validar.get(0).getNome());
-            System.out.println(validar.get(0).getCurso());
-            System.out.println(validar.get(0).getHoras());
-            System.out.println(validar.get(0).getStatus());
-            System.out.println(validar.get(0).getDataEnvio());
+            System.out.println(validar.get(i).getNome());
+            System.out.println(validar.get(i).getCurso());
+            System.out.println(validar.get(i).getHoras());
+            System.out.println(validar.get(i).getStatus());
+            System.out.println(validar.get(i).getDataEnvio());
+            System.out.println(i);
         }
         
         

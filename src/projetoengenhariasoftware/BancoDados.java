@@ -71,19 +71,17 @@ public class BancoDados {
     }
     
     public void getValidar(String nomeAluno, String nomeCertificado, ArrayList validar) {
-            String select = "select a.nomeAluno, c.curso, c.horasModalidade, c.dataEnvio, c.statusProcesso \n" +
-"from certificado c, aluno a, modalidade m, modalidadealuno mm\n" +
-"where a.idAluno = (select idAluno from aluno where nomeAluno = ?) and \n" +
-"c.idAluno = (select idAluno from aluno where nomeAluno = ?) and \n" +
-"m.idModalidade = (select idModalidade from modalidade where nomeModalidade = ?) and\n" +
-"mm.idModalidade = (select idModalidade from modalidade where nomeModalidade = ?);";
-                    
+            String select = "select * from aluno a, certificado c join modalidade m\n" +
+"where c.idModalidade = (select idModalidade from modalidade m where m.nomeModalidade = ?) and\n" +
+"m.idModalidade = (select idModalidade from modalidade m where m.nomeModalidade = ?) and\n" +
+"a.idAluno = (select idAluno from aluno where nomeAluno = ?) and\n" +
+"c.idAluno = (select idAluno from aluno where nomeAluno = ?);";
             try {
                 PreparedStatement in = conexao.prepareStatement(select);
-                in.setString(1, nomeAluno);
-                in.setString(2, nomeAluno);
-                in.setString(3, nomeCertificado);
-                in.setString(4, nomeCertificado);
+                in.setString(1, nomeCertificado);
+                in.setString(2, nomeCertificado);
+                in.setString(3, nomeAluno);
+                in.setString(4, nomeAluno);
                 ResultSet resultadoSelect = in.executeQuery();
                 if(resultadoSelect.first())
                 {

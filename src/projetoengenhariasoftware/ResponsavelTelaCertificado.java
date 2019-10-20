@@ -31,26 +31,6 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
         jPanel3.setVisible(false);
         this.conexao = conexao;
         setModalidade();
-        String item = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        ArrayList<Validar> validar = new ArrayList();
-        
-        conexao.getValidar("Jhonathan Alves", item, validar);
-        if (validar != null) {
-            for (int i = 0; i < validar.size(); i++) {
-                Vector row = new Vector();
-                row.add("");
-                row.add("");
-                row.add("");
-                model.addRow(row);
-
-                model.setValueAt(validar.get(i).getNome(), i, 0);
-                model.setValueAt(validar.get(i).getCurso(), i, 1);
-                model.setValueAt(validar.get(i).getHoras(), i, 2);
-                model.setValueAt(validar.get(i).getDataEnvio(), i, 3);
-                model.setValueAt(validar.get(i).getStatus(), i, 4);
-            }
-        }
     }
 
     private void setModalidade() {
@@ -302,7 +282,25 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        ArrayList<Validar> validar = new ArrayList();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String item = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        System.out.println(model.getRowCount());
+        for (int x = 0; x < model.getRowCount(); x++) {
+            model.removeRow(x);
+        }
+        conexao.getValidar("Jhonathan Alves", item, validar);
+        if (validar.size() > 0) {
+            for (int j = 0; j < validar.size(); j++) {
+                model.addRow(new Vector());
 
+                model.setValueAt(validar.get(j).getNome(), j, 0);
+                model.setValueAt(validar.get(j).getCurso(), j, 1);
+                model.setValueAt(validar.get(j).getHoras(), j, 2);
+                model.setValueAt(validar.get(j).getDataEnvio(), j, 3);
+                model.setValueAt(validar.get(j).getStatus(), j, 4);
+            }
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

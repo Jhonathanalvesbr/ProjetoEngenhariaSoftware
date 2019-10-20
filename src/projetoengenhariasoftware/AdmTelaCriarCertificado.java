@@ -508,11 +508,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                     model.setValueAt(item.get(j).getNomeModalidade(), model.getRowCount() - 1, 0);
                     model.setValueAt(item.get(j).getNumeroHoraMaxima(), model.getRowCount() - 1, 1);
                     model.setValueAt(item.get(j).getObservacao(), model.getRowCount() - 1, 2);
-                    Vector row = new Vector();
-                    row.add("");
-                    row.add("");
-                    row.add("");
-                    model.addRow(row);
+                    model.addRow(new Vector());
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Não existe essa modalidade!");
