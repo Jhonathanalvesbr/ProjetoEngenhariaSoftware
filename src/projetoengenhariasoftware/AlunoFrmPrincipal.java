@@ -125,6 +125,18 @@ public class AlunoFrmPrincipal extends javax.swing.JFrame {
         }
 
     }
+    
+    public static void chamarVisualiarHora(JInternalFrame frame) {
+        centralizaForm(frame);
+        frame.setVisible(true);
+        jDesktop.add(frame);
+        try {
+            frame.setSelected(false);
+            frame.setSelected(true);
+        } catch (PropertyVetoException ex) {
+        }
+
+    }
 
     private static void centralizaForm(JInternalFrame frame) {
         Dimension paneSize = frame.getSize();

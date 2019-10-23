@@ -28,7 +28,7 @@ public class BancoDados {
     Connection conexao;
     ResultSet dados;
     boolean on;
-   
+
     public ResultSet getModalidade() {
         String select = "select * from modalidade";
         PreparedStatement in;
@@ -40,7 +40,7 @@ public class BancoDados {
         }
         return null;
     }
-    
+
     public boolean consultaLogin(String login, String senha) {
         String select = "select * from login";
         try {
@@ -69,44 +69,42 @@ public class BancoDados {
 
         return false;
     }
-    
+
     public void getValidar(String nomeAluno, String nomeCertificado, ArrayList validar) {
-            String select = "select * from aluno a, certificado c join modalidade m\n" +
-"where c.idModalidade = (select idModalidade from modalidade m where m.nomeModalidade = ?) and\n" +
-"m.idModalidade = (select idModalidade from modalidade m where m.nomeModalidade = ?) and\n" +
-"a.idAluno = (select idAluno from aluno where nomeAluno = ?) and\n" +
-"c.idAluno = (select idAluno from aluno where nomeAluno = ?);";
-            try {
-                PreparedStatement in = conexao.prepareStatement(select);
-                in.setString(1, nomeCertificado);
-                in.setString(2, nomeCertificado);
-                in.setString(3, nomeAluno);
-                in.setString(4, nomeAluno);
-                ResultSet resultadoSelect = in.executeQuery();
-                if(resultadoSelect.first())
-                {
+        String select = "select * from aluno a, certificado c join modalidade m\n"
+                + "where c.idModalidade = (select idModalidade from modalidade m where m.nomeModalidade = ?) and\n"
+                + "m.idModalidade = (select idModalidade from modalidade m where m.nomeModalidade = ?) and\n"
+                + "a.idAluno = (select idAluno from aluno where nomeAluno = ?) and\n"
+                + "c.idAluno = (select idAluno from aluno where nomeAluno = ?);";
+        try {
+            PreparedStatement in = conexao.prepareStatement(select);
+            in.setString(1, nomeCertificado);
+            in.setString(2, nomeCertificado);
+            in.setString(3, nomeAluno);
+            in.setString(4, nomeAluno);
+            ResultSet resultadoSelect = in.executeQuery();
+            if (resultadoSelect.first()) {
                 Validar temp;
-                do{
+                do {
                     temp = new Validar();
                     temp.setDataEnvio(resultadoSelect.getString("dataEnvio"));
                     temp.setCurso(resultadoSelect.getString("curso"));
                     temp.setHoras(resultadoSelect.getString("horasModalidade"));
                     temp.setStatus(resultadoSelect.getString("statusProcesso"));
+                    temp.setId(resultadoSelect.getString("id"));
                     temp.setNome(nomeAluno);
                     validar.add(temp);
-                }
-                while(resultadoSelect.next());
-                
+                } while (resultadoSelect.next());
+
                 resultadoSelect.close();
                 in.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ;
     }
-    
+
     public String getNome(String login, int tipoUser) {
         if (tipoUser == 0) {
             String select = "select a.nomeAluno from aluno a, login l where l.idLogin = (select idLogin from login where login = ?) and a.idLogin = (select idLogin from login where login = ?)";
@@ -164,9 +162,8 @@ public class BancoDados {
             Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    int getIdAluno(String aluno)
-    {
+
+    int getIdAluno(String aluno) {
         String select = "select idAluno from aluno where nomeAluno = ?;";
         try {
             PreparedStatement in = conexao.prepareStatement(select);
@@ -181,9 +178,38 @@ public class BancoDados {
         }
         return -1;
     }
-    
-    int getIdModalidade(String modalidade)
-    {
+
+    public void getHorasModalidade(String modalidade, ArrayList<Visualizar> visualizar, String nome) {
+        String select = "select * from certificado c, modalidade m, aluno a\n"
+                + "where c.idModalidade = \n"
+                + "(select idModalidade from modalidade where nomeModalidade = ?) and\n"
+                + "c.idModalidade = m.idModalidade and\n"
+                + "(select idAluno from aluno where nomeAluno = ?) = c.idaluno and\n"
+                + "a.idAluno = (select idAluno from aluno where nomeAluno = ?);";
+        try {
+            PreparedStatement in = conexao.prepareStatement(select);
+            in.setString(1, modalidade);
+            in.setString(2, nome);
+            in.setString(3, nome);
+            ResultSet resultadoSelect = in.executeQuery();
+            if (resultadoSelect.first()) {
+                Visualizar temp;
+                do {
+                    temp = new Visualizar();
+                    temp.setHoras(resultadoSelect.getString("horasModalidade"));
+                    temp.setDataEnvio(resultadoSelect.getString("dataEnvio"));
+                    temp.setStatus(resultadoSelect.getString("statusProcesso"));
+                    temp.setHorasModalidade(resultadoSelect.getString("numeroHoraMaxima"));
+                    visualizar.add(temp);
+                } while (resultadoSelect.next());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    int getIdModalidade(String modalidade) {
         String select = "select idModalidade from modalidade where nomeModalidade = ?;";
         try {
             PreparedStatement in = conexao.prepareStatement(select);
@@ -198,7 +224,7 @@ public class BancoDados {
         }
         return -1;
     }
-    
+
     public void setCertificado(int idAluno, int idModalidade, String horas, String data) {
         String insert = "insert into certificado (idAluno, idModalidade, horasModalidade, dataEnvio, statusProcesso) values(?,?,?,?,?);";
         try {
@@ -207,20 +233,23 @@ public class BancoDados {
             in.setInt(2, idModalidade);
             in.setString(3, horas);
             in.setString(4, data);
-            in.setString(5,"0");
+            in.setString(5, "0");
             in.execute();
             in.close();
         } catch (SQLException ex) {
             Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-        public void setModalidadeAluno(int idAluno, int idModalidade) {
-        String insert = "insert into modalidadealuno (idAluno, idModalidade) values(?,?);";
+
+    public void getCertificado(int idAluno, int idModalidade, String horas, String data) {
+        String insert = "insert into certificado (idAluno, idModalidade, horasModalidade, dataEnvio, statusProcesso) values(?,?,?,?,?);";
         try {
             PreparedStatement in = conexao.prepareStatement(insert);
             in.setInt(1, idAluno);
             in.setInt(2, idModalidade);
+            in.setString(3, horas);
+            in.setString(4, data);
+            in.setString(5, "0");
             in.execute();
             in.close();
         } catch (SQLException ex) {
@@ -243,15 +272,31 @@ public class BancoDados {
             Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void deleteModalidade(String nomeModalidade) {
-        String delete = "delete from modalidade where nomeModalidade = '"+nomeModalidade+"';";
+        String delete = "delete from modalidade where nomeModalidade = '" + nomeModalidade + "';";
         try {
             PreparedStatement in = conexao.prepareStatement(delete);
             in.execute();
             in.close();
         } catch (SQLException ex) {
             Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void setValidar(ArrayList<Validar> validar) {
+        for (int i = 0; i < validar.size(); i++) {
+            String update = "update certificado set statusProcesso = ?"
+                    + "where id = ?;";
+            try {
+                PreparedStatement in = conexao.prepareStatement(update);
+                in.setString(1, validar.get(i).status);
+                in.setString(2, validar.get(i).id);
+                in.execute();
+                in.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -266,6 +311,19 @@ public class BancoDados {
         }
     }
 
+    public void setModalidadeAluno(int idAluno, int idModalidade) {
+        String insert = "insert into modalidadealuno (idAluno, idModalidade) values(?,?);";
+        try {
+            PreparedStatement in = conexao.prepareStatement(insert);
+            in.setInt(1, idAluno);
+            in.setInt(2, idModalidade);
+            in.execute();
+            in.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public ResultSet getBusca(String busca) {
         if (busca.equals("")) {
             String select = "select * from modalidade";
@@ -273,7 +331,7 @@ public class BancoDados {
             try {
                 in = conexao.prepareStatement(select);
                 return in.executeQuery();
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
             }

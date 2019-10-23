@@ -75,6 +75,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -138,13 +139,9 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
         });
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTable1AncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -152,9 +149,13 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 jTable1FocusLost(evt);
             }
         });
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTable1AncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -185,6 +186,14 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton7.setText("Salvar");
+        jButton7.setEnabled(false);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -193,11 +202,15 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
-                .addGap(6, 6, 6))
+                    .addComponent(jButton7)
+                    .addComponent(jButton6)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))
+                .addGap(6, 10, Short.MAX_VALUE))
         );
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton3, jButton6, jButton7});
+
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -209,10 +222,14 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton3, jButton6, jButton7});
 
         jButton2.setText("Limpar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -254,16 +271,19 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton5)
                                 .addGap(1, 1, 1)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton4)
                 .addGap(18, 18, 18))
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jButton4});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -291,6 +311,8 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                     .addComponent(jButton4))
                 .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton2, jButton4});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -436,6 +458,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
             jTextField4.setText((String) model.getValueAt(jTable1.getSelectedRow(), 1));
             jTextArea1.setText((String) model.getValueAt(jTable1.getSelectedRow(), 2));
             setCheckEditar(1);
+            jButton7.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um campo para editar!");
         }
@@ -532,13 +555,104 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 String nomeModalidade =((String) model.getValueAt(jTable1.getSelectedRow(), 0));
                 conexao.deleteModalidade(nomeModalidade);
                 model.removeRow(i);
-                JOptionPane.showMessageDialog(this, "Modalidade excluida com sucesso!");
+                JOptionPane.showMessageDialog(this, "Modalidade foi excluida com sucesso!");
             } else {
                 JOptionPane.showMessageDialog(this, "Selecione um campo para excluir!");
             }
         }
 
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        jButton7.setEnabled(false);
+                try {
+            // TODO add your handling code here:
+            ResultSet dados = null;
+            String nomeModalidade = jTextField3.getText();
+            String numeroHoras = jTextField4.getText();
+            String observacao = jTextArea1.getText();
+
+            if (!nomeModalidade.equals("")) {
+                nomeModalidade = primeiraLetraM(nomeModalidade);
+            }
+            if (!numeroHoras.equals("")) {
+                numeroHoras = primeiraLetraM(numeroHoras);
+            }
+            if (!observacao.equals("")) {
+                observacao = primeiraLetraM(observacao);
+            }
+
+            dados = conexao.getModalidade();
+
+            int selecao = jTable1.getSelectedRow();
+            int checkEditar = getCheckEditar();
+
+            if (nomeModalidade.equals("") || numeroHoras.equals("")) {
+                JOptionPane.showMessageDialog(null, "Existem campos vazios");
+            } else if (selecao >= 0 && checkEditar == 1 && dados.first()) {
+
+                if (jTable1.getRowCount() > 1 && jTable1.getValueAt(selecao, 0) != null
+                        && !jTable1.getValueAt(selecao, 0).equals(nomeModalidade)
+                        || !jTable1.getValueAt(selecao, 1).equals(numeroHoras)
+                        || !jTable1.getValueAt(selecao, 2).equals(observacao)) {
+
+                    conexao.updateModalidade(((String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0)), nomeModalidade, numeroHoras, observacao);
+
+                    jTable1.setValueAt(nomeModalidade, jTable1.getSelectedRow(), 0);
+                    jTable1.setValueAt(numeroHoras, jTable1.getSelectedRow(), 1);
+                    jTable1.setValueAt(observacao, jTable1.getSelectedRow(), 2);
+                    jTable1.clearSelection();
+                    JOptionPane.showMessageDialog(this, "Sua modalidade foi alterada!");
+
+                }
+            } else {
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                selecao = model.getRowCount();
+
+                boolean verifica = true;
+                if (selecao >= 2) {
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        if (this.jTable1.getValueAt(i, 0).equals(nomeModalidade)) {
+                            verifica = false;
+                            JOptionPane.showMessageDialog(this, "Sua modalidade já existe!");
+                            break;
+                        }
+                    }
+                }
+                if (dados.first()) {
+                    do {
+                        if (nomeModalidade.toLowerCase().equals((dados.getString("nomeModalidade").toLowerCase()))) {
+                            verifica = false;
+                            JOptionPane.showMessageDialog(this, "Sua modalidade já existe!");
+                            break;
+                        }
+                    } while (dados.next());
+                }
+                if (verifica == true && checkEditar == 0) {
+                    Vector row = new Vector();
+                    row.add("");
+                    row.add("");
+                    row.add("");
+                    model.addRow(row);
+                    
+                    model.fireTableCellUpdated(model.getRowCount() - 1, model.getColumnCount() - 1);
+
+                    model.setValueAt(nomeModalidade, model.getRowCount() - 1, 0);
+                    model.setValueAt(numeroHoras, model.getRowCount() - 1, 1);
+                    model.setValueAt(observacao, model.getRowCount() - 1, 2);
+                    JOptionPane.showMessageDialog(this, "Sua modalidade foi criada com sucesso!");
+                    conexao.setModalidade(nomeModalidade, numeroHoras, observacao);
+                    
+                }
+
+            }
+            setCheckEditar(0);
+            dados.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdmTelaCriarCertificado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 ////
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -548,6 +662,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

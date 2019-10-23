@@ -10,7 +10,15 @@ package projetoengenhariasoftware;
  * @author Administrador
  */
 public class Validar {
-    String nome, horas, status, dataEnvio, curso;
+    String nome, horas, status, dataEnvio, curso, id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

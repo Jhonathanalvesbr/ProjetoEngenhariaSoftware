@@ -28,18 +28,12 @@ public class Teste {
         if (conexao.consultaLogin("adm", "adm")) {
             System.out.println("Login!");
         }
-        ArrayList<Validar> validar = new ArrayList();
+
+        ArrayList<Visualizar> visualizar;
+        visualizar = new ArrayList();
         
-        conexao.getValidar("Jhonathan Alves", "Curso", validar);
-        for(int i = 0; i < validar.size(); i++)
-        {
-            System.out.println(validar.get(i).getNome());
-            System.out.println(validar.get(i).getCurso());
-            System.out.println(validar.get(i).getHoras());
-            System.out.println(validar.get(i).getStatus());
-            System.out.println(validar.get(i).getDataEnvio());
-            System.out.println(i);
-        }
+        conexao.getHorasModalidade("Certificado",visualizar,"Jhonathan Alves");
+     
         
         
         

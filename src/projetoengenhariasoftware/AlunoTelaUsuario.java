@@ -66,6 +66,11 @@ public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
         jLlEnviarHoras.setText("Enivar Certificados:");
 
         jButtonVisualizarHoras.setText("Entrar");
+        jButtonVisualizarHoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVisualizarHorasActionPerformed(evt);
+            }
+        });
 
         jButtonEnviarHoras.setText("Entrar");
         jButtonEnviarHoras.addActionListener(new java.awt.event.ActionListener() {
@@ -169,6 +174,13 @@ public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonVisualizarHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarHorasActionPerformed
+        // TODO add your handling code here:
+        AlunoTelaVisualizarHora tela = new AlunoTelaVisualizarHora(conexao, nome);
+        AlunoFrmPrincipal.chamarVisualiarHora(tela);
+        
+    }//GEN-LAST:event_jButtonVisualizarHorasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
