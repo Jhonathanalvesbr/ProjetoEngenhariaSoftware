@@ -347,7 +347,7 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
         }
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        conexao.getValidar("Jhonathan Alves", item, validar);
+        conexao.getValidar(item, validar);
         
         if (validar.size() > 0) {
             for (int j = 0; j < validar.size(); j++) {
@@ -373,7 +373,7 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
         }
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        conexao.getValidar("Jhonathan Alves", item, validar);
+        conexao.getValidar(item, validar);
         
         if (validar.size() > 0) {
             for (int j = 0; j < validar.size(); j++) {

@@ -56,12 +56,19 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
                 model.setValueAt(visualizar.get(j).getHoras(), j, 0);
                 model.setValueAt(visualizar.get(j).getDataEnvio(), j, 1);
                 model.setValueAt(visualizar.get(j).getStatus(), j, 2);
-                somaHoras += Integer.parseInt(visualizar.get(j).getHoras());
+                if(visualizar.get(j).getStatus().toLowerCase().equals("deferido"))
+                    somaHoras += Integer.parseInt(visualizar.get(j).getHoras());
             }
         if(somaHoras > 100)
+        {
+            
             jLabel3.setText("100/100 100%");
-        else
-            jLabel3.setText(somaHoras+"/100  "+(100*(somaHoras/100))+"%");
+            jProgressBar1.setValue(100);
+        
+        }else
+        {   jLabel3.setText(somaHoras+"/100  "+(100*(somaHoras/100))+"%");
+        jProgressBar1.setValue(somaHoras);
+    }
     }
     
     private void setModalidade()

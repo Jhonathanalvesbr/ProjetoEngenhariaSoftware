@@ -407,8 +407,8 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
 
                 boolean verifica = true;
                 if (selecao >= 2) {
-                    for (int i = 0; i < model.getRowCount(); i++) {
-                        if (this.jTable1.getValueAt(i, 0).equals(nomeModalidade)) {
+                    for (int i = 0; i < model.getRowCount()-1; i++) {
+                        if (model.getValueAt(i, 0).equals(nomeModalidade)) {
                             verifica = false;
                             JOptionPane.showMessageDialog(this, "Sua modalidade já existe!");
                             break;
@@ -425,17 +425,17 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                     } while (dados.next());
                 }
                 if (verifica == true && checkEditar == 0) {
-                    Vector row = new Vector();
-                    row.add("");
-                    row.add("");
-                    row.add("");
-                    model.addRow(row);
                     
                     model.fireTableCellUpdated(model.getRowCount() - 1, model.getColumnCount() - 1);
 
                     model.setValueAt(nomeModalidade, model.getRowCount() - 1, 0);
                     model.setValueAt(numeroHoras, model.getRowCount() - 1, 1);
                     model.setValueAt(observacao, model.getRowCount() - 1, 2);
+                    
+                    Vector row = new Vector();
+                    row.add("");
+                    model.addRow(row);
+                    
                     JOptionPane.showMessageDialog(this, "Sua modalidade foi criada com sucesso!");
                     conexao.setModalidade(nomeModalidade, numeroHoras, observacao);
                     

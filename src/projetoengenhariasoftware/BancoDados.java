@@ -70,18 +70,15 @@ public class BancoDados {
         return false;
     }
 
-    public void getValidar(String nomeAluno, String nomeCertificado, ArrayList validar) {
-        String select = "select * from aluno a, certificado c join modalidade m\n"
-                + "where c.idModalidade = (select idModalidade from modalidade m where m.nomeModalidade = ?) and\n"
-                + "m.idModalidade = (select idModalidade from modalidade m where m.nomeModalidade = ?) and\n"
-                + "a.idAluno = (select idAluno from aluno where nomeAluno = ?) and\n"
-                + "c.idAluno = (select idAluno from aluno where nomeAluno = ?);";
+    public void getValidar(String nomeCertificado, ArrayList validar) {
+        String select = "select * from aluno a, certificado c join modalidade m \n" +
+"where c.idModalidade = (select idModalidade from modalidade m where m.nomeModalidade = ?) and \n" +
+"m.idModalidade = (select idModalidade from modalidade m where m.nomeModalidade = ?) and\n" +
+"a.idAluno = c.idAluno;";
         try {
             PreparedStatement in = conexao.prepareStatement(select);
             in.setString(1, nomeCertificado);
             in.setString(2, nomeCertificado);
-            in.setString(3, nomeAluno);
-            in.setString(4, nomeAluno);
             ResultSet resultadoSelect = in.executeQuery();
             if (resultadoSelect.first()) {
                 Validar temp;
@@ -92,7 +89,7 @@ public class BancoDados {
                     temp.setHoras(resultadoSelect.getString("horasModalidade"));
                     temp.setStatus(resultadoSelect.getString("statusProcesso"));
                     temp.setId(resultadoSelect.getString("id"));
-                    temp.setNome(nomeAluno);
+                    temp.setNome(resultadoSelect.getString("nomeAluno"));
                     validar.add(temp);
                 } while (resultadoSelect.next());
 
