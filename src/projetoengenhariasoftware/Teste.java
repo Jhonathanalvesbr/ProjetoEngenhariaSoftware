@@ -29,14 +29,9 @@ public class Teste {
             System.out.println("Login!");
         }
 
-        ArrayList<Visualizar> visualizar;
-        visualizar = new ArrayList();
+        Ftp ftp = new Ftp();
         
-        conexao.getHorasModalidade("Certificado",visualizar,"Jhonathan Alves");
-     
-        
-        
-        
+        ftp.conectar();
 
     }
 }

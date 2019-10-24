@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
     BancoDados conexao;
-    ArrayList<Visualizar> visualizar;
+    List<Visualizar> visualizar;
     String nome;
 
     public BancoDados getConexao() {
@@ -46,7 +47,7 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
     {
         visualizar = new ArrayList();
         int idAluno = conexao.getIdAluno(nome);
-        conexao.getHorasModalidade(nomeModalidade, visualizar, nome);
+        conexao.getHorasModalidade(nomeModalidade, (ArrayList<Visualizar>) visualizar, nome);
         int somaHoras = 0;
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -104,13 +105,14 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
         jLblInicial3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         jLblInicial3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLblInicial3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -190,6 +192,8 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        jButton1.setText("Abrir");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -197,13 +201,19 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 15, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -246,6 +256,7 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

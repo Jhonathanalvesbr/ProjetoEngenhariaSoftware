@@ -8,14 +8,13 @@ package projetoengenhariasoftware;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -495,7 +494,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
         ResultSet dados;
 
         String busca = jTextField1.getText();
-        ArrayList<Modalidade> item = new ArrayList<>();
+        List<Modalidade> item = new ArrayList<>();
 
         dados = conexao.getBusca(busca);
         try {
