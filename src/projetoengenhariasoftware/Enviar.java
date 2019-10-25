@@ -21,7 +21,7 @@ public class Enviar extends javax.swing.JInternalFrame {
     public Enviar() {
         initComponents();
         jFileChooser1.setFileSelectionMode(jFileChooser1.FILES_ONLY);
-        jFileChooser1.setFileFilter(new FileNameExtensionFilter("Excel 97", "xls"));
+        jFileChooser1.setFileFilter(new FileNameExtensionFilter("TXT", "txt"));
 
     }
 
@@ -69,6 +69,7 @@ public class Enviar extends javax.swing.JInternalFrame {
 
             AlunoTelaEnviarCertificado.jTextField2.setText(file.getPath());
             arq = jFileChooser1.getSelectedFile().getAbsoluteFile();
+            AlunoTelaEnviarCertificado.setDiretorio(""+arq);
         } else {
             AlunoTelaEnviarCertificado.jTextField2.setText("");
         }

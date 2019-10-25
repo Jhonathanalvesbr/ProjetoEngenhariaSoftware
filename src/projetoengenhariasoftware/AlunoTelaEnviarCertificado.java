@@ -6,6 +6,7 @@
 package projetoengenhariasoftware;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 /*import java.time.LocalDateTime;
@@ -25,6 +26,18 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
     ResultSet dados;
     static File arquivo = null;
     String nome;
+    static String diretorio;
+
+    public static String getDiretorio() {
+        return diretorio;
+    }
+
+    public static void setDiretorio(String diretorio) {
+        AlunoTelaEnviarCertificado.diretorio = diretorio;
+    }
+
+    
+    
     /**
      * Creates new form NewJInternalFrame
      */
@@ -284,6 +297,15 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         String horas = jTextField1.getText();
         conexao.setCertificado(idAluno,idModalidade, horas, data);
         conexao.setModalidadeAluno(idAluno, idModalidade);
+        Ftp ftp = new Ftp();
+        System.out.println(jTextField2.getText());
+        ftp.conectar(""+idAluno);
+        try {
+            ftp.upload(jTextField2.getText(), diretorio);
+        } catch (IOException ex) {
+            Logger.getLogger(AlunoTelaEnviarCertificado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         JOptionPane.showMessageDialog(null, "Certificado enviado com sucesso!");
     }//GEN-LAST:event_jButton3ActionPerformed
 
