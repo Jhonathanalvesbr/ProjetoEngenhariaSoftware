@@ -22,7 +22,6 @@ public class Enviar extends javax.swing.JInternalFrame {
         initComponents();
         jFileChooser1.setFileSelectionMode(jFileChooser1.FILES_ONLY);
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("TXT", "txt"));
-
     }
 
     /**
@@ -63,7 +62,8 @@ public class Enviar extends javax.swing.JInternalFrame {
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
         // TODO add your handling code here:
-        File file = jFileChooser1.getSelectedFile();
+        File file = null;
+        file = jFileChooser1.getSelectedFile();
         File arq = null;
         if (file != null) {
 

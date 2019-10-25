@@ -298,15 +298,17 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         conexao.setCertificado(idAluno,idModalidade, horas, data);
         conexao.setModalidadeAluno(idAluno, idModalidade);
         Ftp ftp = new Ftp();
-        System.out.println(jTextField2.getText());
+        
         ftp.conectar(""+idAluno);
+        
         try {
-            ftp.upload(jTextField2.getText(), diretorio);
+            ftp.upload(jTextField2.getText(), diretorio, jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"//");
         } catch (IOException ex) {
             Logger.getLogger(AlunoTelaEnviarCertificado.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         JOptionPane.showMessageDialog(null, "Certificado enviado com sucesso!");
+       
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

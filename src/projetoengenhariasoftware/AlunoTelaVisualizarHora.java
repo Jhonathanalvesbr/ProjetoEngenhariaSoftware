@@ -5,6 +5,7 @@
  */
 package projetoengenhariasoftware;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
     private void setHoras(String nomeModalidade)
     {
         visualizar = new ArrayList();
-        int idAluno = conexao.getIdAluno(nome);
+        
         conexao.getHorasModalidade(nomeModalidade, (ArrayList<Visualizar>) visualizar, nome);
         int somaHoras = 0;
         
@@ -193,6 +194,11 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
         }
 
         jButton1.setText("Abrir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -253,6 +259,23 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
     private void jComboBox1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1FocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Ftp ftp = new Ftp();
+        int idAluno = conexao.getIdAluno(nome);
+        ftp.conectar(""+idAluno);
+        String s = System.getProperty("user.home") + "\\Downloads\\";
+        int selecao = jTable1.getSelectedRow();
+        
+        try {
+            ftp.download(s,""+idAluno, selecao,jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"/");
+            Runtime.getRuntime().exec("explorer "+s);
+        } catch (IOException ex) {
+            Logger.getLogger(AlunoTelaVisualizarHora.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

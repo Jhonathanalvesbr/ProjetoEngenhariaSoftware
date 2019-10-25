@@ -161,6 +161,7 @@ public class BancoDados {
     }
 
     int getIdAluno(String aluno) {
+
         String select = "select idAluno from aluno where nomeAluno = ?;";
         try {
             PreparedStatement in = conexao.prepareStatement(select);
@@ -169,6 +170,7 @@ public class BancoDados {
             resultadoSelect.first();
             int idAluno = resultadoSelect.getInt("idAluno");
             in.close();
+            
             return idAluno;
         } catch (SQLException ex) {
             Logger.getLogger(BancoDados.class.getName()).log(Level.SEVERE, null, ex);
