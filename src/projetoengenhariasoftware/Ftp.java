@@ -23,7 +23,7 @@ public class Ftp {
     
     public void conectar(String diretorio){
         try {
-            ftp.connect("100.65.176.17", 2221);
+            ftp.connect("192.168.100.3", 2221);
             ftp.login("francis", "francis");
             ftp.makeDirectory(diretorio);
             ftp.changeWorkingDirectory(diretorio);
