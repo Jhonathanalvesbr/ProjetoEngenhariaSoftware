@@ -21,9 +21,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Administrador
  */
 public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
-    BancoDados conexao;
-    List<Visualizar> visualizar;
-    String nome;
+    private BancoDados conexao;
+    private List<Visualizar> visualizar;
+    private String nome;
 
     public BancoDados getConexao() {
         return conexao;
@@ -106,7 +106,7 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
         jLblInicial3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -114,6 +114,10 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         jLblInicial3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLblInicial3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -132,7 +136,7 @@ public class AlunoTelaVisualizarHora extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setText("Pontos:");
+        jLabel2.setText("Progresso:");
 
         jLabel3.setText("0/0 - 0%");
 

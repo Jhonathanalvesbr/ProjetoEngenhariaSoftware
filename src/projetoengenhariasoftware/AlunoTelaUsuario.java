@@ -10,9 +10,10 @@ package projetoengenhariasoftware;
  * @author aluno
  */
 public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
-    
-    BancoDados conexao;
-    String nome;
+    private ChamarIFrm chamarIFrm = new ChamarIFrm();
+    private BancoDados conexao;
+    private String nome;
+    private AlunoFrmPrincipal frame;
     
     public void setConexao(BancoDados conexao) {
         this.conexao = conexao;
@@ -21,10 +22,11 @@ public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
     /**
      * Creates new form NewJInternalFrame
      */
-    public AlunoTelaUsuario(BancoDados conexao, String nome) {
+    public AlunoTelaUsuario(BancoDados conexao, String nome, AlunoFrmPrincipal frame) {
         this.nome = nome;
         initComponents();
         setConexao(conexao);
+        this.frame = frame;
     }
 
     /**
@@ -61,9 +63,9 @@ public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
             .addComponent(jLblInicial3)
         );
 
-        jLlVisualizarHoras.setText("Visualizar Horas:");
+        jLlVisualizarHoras.setText("Visualizar horas:");
 
-        jLlEnviarHoras.setText("Enivar Certificados:");
+        jLlEnviarHoras.setText("Enivar certificados:");
 
         jButtonVisualizarHoras.setText("Entrar");
         jButtonVisualizarHoras.addActionListener(new java.awt.event.ActionListener() {
@@ -165,20 +167,20 @@ public class AlunoTelaUsuario extends javax.swing.JInternalFrame {
 
     private void jButtonEnviarHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarHorasActionPerformed
         // TODO add your handling code here:
-        AlunoTelaEnviarCertificado tela = new AlunoTelaEnviarCertificado(nome);
+        AlunoTelaEnviarCertificado tela = new AlunoTelaEnviarCertificado(nome, frame);
         tela.setConexao(conexao);
-        AlunoFrmPrincipal.chamarEnviarCertificado(tela);
+        chamarIFrm.chamarFrame(tela, frame.getjDesktop());
     }//GEN-LAST:event_jButtonEnviarHorasActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
         // TODO add your handling code here:
-        dispose();
+        Sair.bye();
     }//GEN-LAST:event_jButtonSairActionPerformed
 
     private void jButtonVisualizarHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarHorasActionPerformed
         // TODO add your handling code here:
         AlunoTelaVisualizarHora tela = new AlunoTelaVisualizarHora(conexao, nome);
-        AlunoFrmPrincipal.chamarVisualiarHora(tela);
+        chamarIFrm.chamarFrame(tela, frame.getjDesktop());
         
     }//GEN-LAST:event_jButtonVisualizarHorasActionPerformed
 

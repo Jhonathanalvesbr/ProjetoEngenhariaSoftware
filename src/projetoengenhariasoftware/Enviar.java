@@ -6,7 +6,6 @@
 package projetoengenhariasoftware;
 
 import java.io.File;
-import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -15,13 +14,17 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Enviar extends javax.swing.JInternalFrame {
 
+    private int result;
+    private AlunoTelaEnviarCertificado alunoTelaEnviarCertificado;
+
     /**
      * Creates new form Enviar
      */
-    public Enviar() {
+    public Enviar(AlunoTelaEnviarCertificado alunoTelaEnviarCertificado) {
         initComponents();
         jFileChooser1.setFileSelectionMode(jFileChooser1.FILES_ONLY);
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("TXT", "txt"));
+        this.alunoTelaEnviarCertificado = alunoTelaEnviarCertificado;
     }
 
     /**
@@ -34,6 +37,10 @@ public class Enviar extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,25 +68,27 @@ public class Enviar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        // TODO add your handling code here:
-        File file = null;
-        file = jFileChooser1.getSelectedFile();
-        File arq = null;
-        if (file != null) {
+        // TODO add your handling code here:[
+        if (evt.getActionCommand().equals(javax.swing.JFileChooser.APPROVE_SELECTION)) {
+            File file = null;
+            file = jFileChooser1.getSelectedFile();
+            File arq = null;
+            if (file != null) {
 
-            AlunoTelaEnviarCertificado.jTextField2.setText(file.getPath());
-            arq = jFileChooser1.getSelectedFile().getAbsoluteFile();
-            AlunoTelaEnviarCertificado.setDiretorio(""+arq);
-        } else {
-            AlunoTelaEnviarCertificado.jTextField2.setText("");
-        }
-        if (arq != null) {
-            AlunoTelaEnviarCertificado.setArquivo(arq);
-        }
+                AlunoTelaEnviarCertificado.jTextField2.setText(file.getPath());
+                arq = jFileChooser1.getSelectedFile().getAbsoluteFile();
+                alunoTelaEnviarCertificado.setDiretorio("" + arq);
+            } else {
+                AlunoTelaEnviarCertificado.jTextField2.setText("");
+            }
+            if (arq != null) {
+                alunoTelaEnviarCertificado.setArquivo(arq);
+            }
 
-        dispose();
-        setVisible(false);
-        dispose();
+        } else if (evt.getActionCommand().equals(javax.swing.JFileChooser.CANCEL_SELECTION)) {
+
+        }
+        Sair.fechar(this);
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
 

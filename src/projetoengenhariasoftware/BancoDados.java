@@ -6,7 +6,6 @@
 package projetoengenhariasoftware;
 
 import java.awt.HeadlessException;
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,8 +15,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
 
 /**
  *
@@ -25,9 +23,17 @@ import javax.swing.JTextField;
  */
 public class BancoDados {
 
-    Connection conexao;
-    ResultSet dados;
-    boolean on;
+    private Connection conexao;
+    private ResultSet dados;
+    private boolean on;
+
+    public boolean getOn() {
+        return on;
+    }
+
+    public void setOn(boolean on) {
+        this.on = on;
+    }
 
     public ResultSet getModalidade() {
         String select = "select * from modalidade";
@@ -289,8 +295,8 @@ public class BancoDados {
                     + "where id = ?;";
             try {
                 PreparedStatement in = conexao.prepareStatement(update);
-                in.setString(1, validar.get(i).status);
-                in.setString(2, validar.get(i).id);
+                in.setString(1, validar.get(i).getStatus());
+                in.setString(2, validar.get(i).getId());
                 in.execute();
                 in.close();
             } catch (SQLException ex) {

@@ -11,10 +11,10 @@ package projetoengenhariasoftware;
  * @author Administrador
  */
 public class Visualizar {
-    String horasModalidade;
-    String horas;
-    String status;
-    String dataEnvio;
+    private String horasModalidade;
+    private String horas;
+    private String status;
+    private String dataEnvio;
 
     public String getHorasModalidade() {
         return horasModalidade;

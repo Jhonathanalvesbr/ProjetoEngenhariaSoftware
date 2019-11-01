@@ -7,21 +7,22 @@ package projetoengenhariasoftware;
 
 /**
  *
- * @author aluno
+ * @author Administrador
  */
-public class AdmTelaAdministrador extends javax.swing.JInternalFrame {
+public class ResponsavelTela extends javax.swing.JInternalFrame {
     private BancoDados conexao;
-    private AdmFrmPrincipal frame;
-    
-    public AdmTelaAdministrador(BancoDados conexao, AdmFrmPrincipal frame) {
+    private ChamarIFrm chamarIFrm = new ChamarIFrm();
+    private ResponsavelFrmPrincipal frame;
+            
+    public ResponsavelTela(BancoDados conexao, ResponsavelFrmPrincipal frame) {
         initComponents();
         this.conexao = conexao;
         this.frame = frame;
     }
     /**
-     * Creates new form NewJInternalFrame
+     * Creates new form ResponsavelTela
      */
-    public AdmTelaAdministrador() {
+    public ResponsavelTela() {
         initComponents();
     }
 
@@ -50,14 +51,14 @@ public class AdmTelaAdministrador extends javax.swing.JInternalFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLblInicial3, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+            .addComponent(jLblInicial3, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLblInicial3)
         );
 
-        jLlEnviarHoras.setText("Cadastrar certificado:");
+        jLlEnviarHoras.setText("Validar certificado:");
 
         jButtonEnviarHoras.setText("Entrar");
         jButtonEnviarHoras.addActionListener(new java.awt.event.ActionListener() {
@@ -132,9 +133,8 @@ public class AdmTelaAdministrador extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -142,8 +142,9 @@ public class AdmTelaAdministrador extends javax.swing.JInternalFrame {
 
     private void jButtonEnviarHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarHorasActionPerformed
         // TODO add your handling code here:
-        AdmTelaCriarCertificado tela = new AdmTelaCriarCertificado(conexao, frame);
-        frame.getChamarIFrm().chamarFrame(tela, frame.getjDesktop());
+        ResponsavelTelaCertificado tela = new ResponsavelTelaCertificado(conexao);
+        chamarIFrm.chamarFrame(tela, frame.getjDesktop());
+
     }//GEN-LAST:event_jButtonEnviarHorasActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed

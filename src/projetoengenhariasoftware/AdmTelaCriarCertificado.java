@@ -22,13 +22,14 @@ import javax.swing.table.DefaultTableModel;
  * @author aluno
  */
 public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
+    private AdmFrmPrincipal frame;
+    private int checkEditar = 0;
+    private BancoDados conexao;
 
-    int checkEditar = 0;
-    BancoDados conexao;
-
-    public AdmTelaCriarCertificado(BancoDados conexao) {
+    public AdmTelaCriarCertificado(BancoDados conexao, AdmFrmPrincipal frame) {
         initComponents();
         this.conexao = conexao;
+        this.frame = frame;
     }
 
     public int getCheckEditar() {
@@ -78,6 +79,10 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+
         jLblInicial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLblInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLblInicial.setText("Cadastro de Modalidade");
@@ -88,7 +93,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setText("Numero maximo de horas permitidas:");
+        jLabel2.setText("Limite de horas:");
 
         jLabel3.setText("Obervação:");
 
@@ -118,7 +123,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                 {null, null, null}
             },
             new String [] {
-                "Nome da Modalidade", "Numero de Horas Máxima Permitida", "Observação"
+                "Nome da modalidade", "Limite de horas", "Observação"
             }
         ) {
             Class[] types = new Class [] {
@@ -256,19 +261,17 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
                         .addGap(10, 10, 10))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel1))
+                            .addComponent(jLabel1)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField4)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton5)
                                 .addGap(1, 1, 1)))
@@ -351,12 +354,9 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
         return s;
     }
 
-    private void sair() {
-        dispose();
-    }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        sair();
+        Sair.fechar(this);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

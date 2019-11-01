@@ -5,18 +5,23 @@
  */
 package projetoengenhariasoftware;
 
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.beans.PropertyVetoException;
-import javax.swing.JInternalFrame;
+import javax.swing.JDesktopPane;
 
 /**
  *
  * @author aluno
  */
 public class ResponsavelFrmPrincipal extends javax.swing.JFrame {
-    BancoDados conexao;
+    private BancoDados conexao;
 
+    public JDesktopPane getjDesktop() {
+        return jDesktop;
+    }
+
+    public void setjDesktop(JDesktopPane jDesktop) {
+        this.jDesktop = jDesktop;
+    }
+    ChamarIFrm chamarIFrm = new ChamarIFrm();
     public BancoDados getConexao() {
         return conexao;
     }
@@ -24,7 +29,6 @@ public class ResponsavelFrmPrincipal extends javax.swing.JFrame {
     public void setConexao(BancoDados conexao) {
         this.conexao = conexao;
     }
-    boolean ativo = false;
 
     /**
      * Creates new form FrmPrincipal
@@ -33,6 +37,8 @@ public class ResponsavelFrmPrincipal extends javax.swing.JFrame {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         this.conexao = conexao;
+        ResponsavelTela tela = new ResponsavelTela(conexao, this);
+        chamarIFrm.chamarFrame(tela, jDesktop);
     }
     
     
@@ -47,9 +53,8 @@ public class ResponsavelFrmPrincipal extends javax.swing.JFrame {
 
         jDesktop = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -62,23 +67,24 @@ public class ResponsavelFrmPrincipal extends javax.swing.JFrame {
         );
         jDesktopLayout.setVerticalGroup(
             jDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 281, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Arquivo");
-
-        jMenuItem1.setText("Validar certificado");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+        jMenu2.setText("Validar certificado");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
+
+        jMenu1.setText("Sair");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -96,34 +102,18 @@ public class ResponsavelFrmPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void chamarEnviarCertificado(JInternalFrame frame)
-    {
-        if(ativo == false)
-        {
-            ativo = true;
-            centralizaForm(frame);
-            frame.setVisible(true);
-            jDesktop.add(frame);
-            try
-            {
-                frame.setSelected(false);
-                frame.setSelected(true);
-            }
-            catch (PropertyVetoException ex) {}
-        }
-        
-    }
-    private void centralizaForm(JInternalFrame frame) {
-        Dimension  paneSize = frame.getSize();  
-                Dimension  screenSize = frame.getToolkit().getScreenSize();  
-                frame.setLocation((screenSize.width - paneSize.width) / 2, (int) ((screenSize.height - paneSize.height) / 2.5));
-    }
     
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
         // TODO add your handling code here:
-        ResponsavelTelaCertificado tela = new ResponsavelTelaCertificado(conexao);
-        chamarEnviarCertificado(tela);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        ResponsavelTelaCertificado tela;
+               tela = new ResponsavelTelaCertificado(conexao);
+        chamarIFrm.chamarFrame(tela, jDesktop);
+    }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        // TODO add your handling code here:
+        Sair.bye();
+    }//GEN-LAST:event_jMenu1MouseClicked
 
     
     /**
@@ -136,6 +126,5 @@ public class ResponsavelFrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }

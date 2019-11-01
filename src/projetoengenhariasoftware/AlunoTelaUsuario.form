@@ -143,12 +143,12 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLlVisualizarHoras">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Visualizar Horas:"/>
+                <Property name="text" type="java.lang.String" value="Visualizar horas:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLlEnviarHoras">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Enivar Certificados:"/>
+                <Property name="text" type="java.lang.String" value="Enivar certificados:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonVisualizarHoras">

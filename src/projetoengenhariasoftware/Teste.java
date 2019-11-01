@@ -4,22 +4,10 @@
  * and open the template in the editor.
  */
 package projetoengenhariasoftware;
-
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.Normalizer;
-import java.text.SimpleDateFormat;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import static javax.print.attribute.Size2DSyntax.MM;
-import javax.swing.JLabel;
+
 
 /**
  *

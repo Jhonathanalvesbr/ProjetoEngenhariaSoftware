@@ -22,18 +22,20 @@ import javax.swing.JOptionPane;
  * @author aluno
  */
 public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
-    BancoDados conexao;
-    ResultSet dados;
-    static File arquivo = null;
-    String nome;
-    static String diretorio;
-
-    public static String getDiretorio() {
+    private BancoDados conexao;
+    private ResultSet dados;
+    private File arquivo = null;
+    private String nome;
+    private String diretorio;
+    private ChamarIFrm chamarIFrm = new ChamarIFrm();
+    private AlunoFrmPrincipal frame;
+    
+    public String getDiretorio() {
         return diretorio;
     }
 
-    public static void setDiretorio(String diretorio) {
-        AlunoTelaEnviarCertificado.diretorio = diretorio;
+    public void setDiretorio(String diretorio) {
+        this.diretorio = diretorio;
     }
 
     
@@ -41,13 +43,15 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
     /**
      * Creates new form NewJInternalFrame
      */
-    public AlunoTelaEnviarCertificado(String nome) {
+    public AlunoTelaEnviarCertificado(String nome, AlunoFrmPrincipal frame) {
         this.nome = nome;
+        this.frame = frame;
         initComponents();
+        
     }
     
-        public static void setArquivo(File arquivo) {
-        AlunoTelaEnviarCertificado.arquivo = arquivo;
+    public void setArquivo(File arquivo) {
+        this.arquivo = arquivo;
         String s = arquivo.getName();
         
         jTextField2.setText(s);
@@ -85,6 +89,10 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+
         jLblInicial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLblInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLblInicial.setText("Enviar Certificado");
@@ -102,14 +110,14 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Modalidade:");
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
         jComboBox1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jComboBox1FocusLost(evt);
+            }
+        });
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
         });
 
@@ -250,8 +258,8 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Enviar enviar = new Enviar();
-        AlunoFrmPrincipal.chamarEnviarCertificado(enviar);
+        Enviar enviar = new Enviar(this);
+        chamarIFrm.chamarFrame(enviar, frame.getjDesktop());
     }//GEN-LAST:event_jButton2ActionPerformed
     
     private void setModalidade()
@@ -288,7 +296,13 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jLblInicialAncestorAdded
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        if(jTextField1.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Digite a quantidade de horas do certificado.");
+        }
+        else
+        {
+            // TODO add your handling code here:
         /*DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
         LocalDateTime now = LocalDateTime.now();*/
         String data =  "2019/08/10";//(String) dtf.format(now);
@@ -303,12 +317,16 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
         
         try {
             ftp.upload(jTextField2.getText(), diretorio, jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"//");
+            JOptionPane.showMessageDialog(null, "Certificado enviado com sucesso!");
+            jTextField1.setText("");
+            jTextField2.setText("");
         } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao enviar!");
             Logger.getLogger(AlunoTelaEnviarCertificado.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        JOptionPane.showMessageDialog(null, "Certificado enviado com sucesso!");
-       
+        
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

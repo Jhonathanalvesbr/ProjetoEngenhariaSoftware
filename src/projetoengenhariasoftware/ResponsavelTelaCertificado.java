@@ -20,9 +20,9 @@ import javax.swing.table.DefaultTableModel;
  * @author aluno
  */
 public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
-    ArrayList<Validar> validar;
+    private ArrayList<Validar> validar;
     
-    BancoDados conexao;
+    private BancoDados conexao;
 
     /**
      * Creates new form NewJInternalFrame
@@ -81,6 +81,10 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         jLblInicial.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLblInicial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -221,6 +225,11 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
         });
 
         jButton1.setText("Sair");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Calcelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -452,6 +461,11 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

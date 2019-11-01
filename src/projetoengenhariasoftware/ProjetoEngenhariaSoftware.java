@@ -5,9 +5,6 @@
  */
 package projetoengenhariasoftware;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -17,11 +14,12 @@ public class ProjetoEngenhariaSoftware {
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String[] args) {
         // TODO code application logic here
         BancoDados conexao = new BancoDados();
         
-        if(conexao.on)
+        if(conexao.getOn())
         {
             TelaLogin tela = new TelaLogin();
             tela.setVisible(true);

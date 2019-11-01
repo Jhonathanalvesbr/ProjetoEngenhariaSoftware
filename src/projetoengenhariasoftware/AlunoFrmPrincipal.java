@@ -5,22 +5,24 @@
  */
 package projetoengenhariasoftware;
 
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.beans.PropertyVetoException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JInternalFrame;
+import javax.swing.JDesktopPane;
 
 /**
  *
  * @author aluno
  */
 public class AlunoFrmPrincipal extends javax.swing.JFrame {
+    private BancoDados conexao;
+    private String nome;
+    private ChamarIFrm chamarIFrm = new ChamarIFrm();
 
-    BancoDados conexao;
-    String nome;
+    public ChamarIFrm getChamarIFrm() {
+        return chamarIFrm;
+    }
+
+    public void setChamarIFrm(ChamarIFrm chamarIFrm) {
+        this.chamarIFrm = chamarIFrm;
+    }
     
     public void setConexao(BancoDados conexao) {
         this.conexao = conexao;
@@ -33,27 +35,11 @@ public class AlunoFrmPrincipal extends javax.swing.JFrame {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         this.nome = nome;
-        AlunoTelaUsuario frame = new AlunoTelaUsuario(conexao, nome);
-        frame.setConexao(conexao);
-        chamarFrame(frame);
-        
+        this.conexao = conexao;
+        AlunoTelaUsuario frame = new AlunoTelaUsuario(conexao, nome, this);
+        chamarIFrm.chamarFrame(frame, jDesktop);
     }
 
-    public void chamarIFrame(JInternalFrame frame) {
-        chamarFrame(frame);
-    }
-
-    private void chamarFrame(JInternalFrame frame) {
-        centralizaForm(frame);
-        frame.setVisible(true);
-        jDesktop.add(frame);
-        try {
-            frame.setSelected(false);
-            frame.setSelected(true);
-        } catch (PropertyVetoException ex) {
-        }
-
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,9 +52,9 @@ public class AlunoFrmPrincipal extends javax.swing.JFrame {
 
         jDesktop = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,23 +66,41 @@ public class AlunoFrmPrincipal extends javax.swing.JFrame {
         );
         jDesktopLayout.setVerticalGroup(
             jDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGap(0, 281, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Arquivo");
-
-        jMenuItem1.setText("Enviar certificado");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+        jMenu2.setText("Enviar certificado");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
+        jMenu2.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
+            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
+                jMenu2MenuKeyPressed(evt);
+            }
+            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
+            }
+            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
+            }
+        });
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Visualizar horas");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu3);
+
+        jMenu1.setText("Sair");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -114,52 +118,50 @@ public class AlunoFrmPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void chamarEnviarCertificado(JInternalFrame frame) {
-        centralizaForm(frame);
-        frame.setVisible(true);
-        jDesktop.add(frame);
-        try {
-            frame.setSelected(false);
-            frame.setSelected(true);
-        } catch (PropertyVetoException ex) {
-        }
 
-    }
-    
-    public static void chamarVisualiarHora(JInternalFrame frame) {
-        centralizaForm(frame);
-        frame.setVisible(true);
-        jDesktop.add(frame);
-        try {
-            frame.setSelected(false);
-            frame.setSelected(true);
-        } catch (PropertyVetoException ex) {
-        }
 
-    }
 
-    private static void centralizaForm(JInternalFrame frame) {
-        Dimension paneSize = frame.getSize();
-        Dimension screenSize = frame.getToolkit().getScreenSize();
-        frame.setLocation((screenSize.width - paneSize.width) / 2, (int) ((screenSize.height - paneSize.height) / 2.5));
-    }
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenu2MenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_jMenu2MenuKeyPressed
         // TODO add your handling code here:
-        AlunoTelaEnviarCertificado aluno = new AlunoTelaEnviarCertificado(nome);
-        chamarEnviarCertificado(aluno);
-        aluno.setConexao(conexao);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        
+    }//GEN-LAST:event_jMenu2MenuKeyPressed
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        // TODO add your handling code here:
+        AlunoTelaVisualizarHora tela = new AlunoTelaVisualizarHora(conexao, nome);
+        chamarIFrm.chamarFrame(tela, jDesktop);
+    }//GEN-LAST:event_jMenu3MouseClicked
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        // TODO add your handling code here:
+        AlunoTelaEnviarCertificado tela = new AlunoTelaEnviarCertificado(nome, this);
+        tela.setConexao(conexao);
+        chamarIFrm.chamarFrame(tela, jDesktop);
+    }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        // TODO add your handling code here:
+        Sair.bye();
+    }//GEN-LAST:event_jMenu1MouseClicked
+
+    public JDesktopPane getjDesktop() {
+        return jDesktop;
+    }
+
+    public void setjDesktop(JDesktopPane jDesktop) {
+        this.jDesktop = jDesktop;
+    }
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private static javax.swing.JDesktopPane jDesktop;
+    private javax.swing.JDesktopPane jDesktop;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }
