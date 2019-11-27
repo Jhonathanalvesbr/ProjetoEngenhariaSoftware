@@ -23,7 +23,7 @@ public class Ftp {
     
     public void conectar(String diretorio){
         try {
-            ftp.connect("192.168.100.3", 2221);
+            ftp.connect("127.0.0.1", 21);
             ftp.login("francis", "francis");
             ftp.makeDirectory(diretorio);
             ftp.changeWorkingDirectory(diretorio);
@@ -47,28 +47,26 @@ public class Ftp {
             
     }
     
-    public void download(String diretorioCliente,String diretorio, int selecao, String diretorioFtp) throws FileNotFoundException, IOException
+    public void download(String diretorioCliente, String diretorio, int selecao, String modalidade) throws FileNotFoundException, IOException
     {
-        ftp.changeWorkingDirectory(diretorioFtp);
+        ftp.changeWorkingDirectory(modalidade);
         
-        int i = 0;
         String arquivoDownload = null;
         String[] arq = ftp.listNames();
             System.out.println ("Listando arquivos: \n");
-            int x = 0;
-            for (String f : arq){
-                if(i == x++)
+
+            for (int i = 0; i < arq.length; i++){
+                System.out.println(arq[i]);
+                if(i == selecao)
                 {
-                    arquivoDownload = f;
+                    arquivoDownload = arq[i];
                     break;
                 }
-                
-                    arquivoDownload = f;
-                
-                     
+                    arquivoDownload = arq[i];
             }
             
         FileOutputStream fos = new FileOutputStream(diretorioCliente+arquivoDownload);
+        
         System.out.println(diretorioCliente+arquivoDownload);
         
             if (ftp.retrieveFile(arquivoDownload, fos))

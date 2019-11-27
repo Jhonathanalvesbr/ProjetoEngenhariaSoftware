@@ -360,6 +360,13 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         boolean verificaInteiro;
+        try{
+            int horas = Integer.parseInt(jTextField4.getText());
+                verificaInteiro = true;
+            }catch(Exception e){
+                verificaInteiro = false;
+            }
         try {
             // TODO add your handling code here:
             ResultSet dados = null;
@@ -384,7 +391,12 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
 
             if (nomeModalidade.equals("") || numeroHoras.equals("")) {
                 JOptionPane.showMessageDialog(null, "Existem campos vazios");
-            } else if (selecao >= 0 && checkEditar == 1 && dados.first()) {
+            } 
+            else if(verificaInteiro == false)
+        {
+            JOptionPane.showMessageDialog(null, "As horas do certificado deve conter somente números.");
+        }
+            else if (selecao >= 0 && checkEditar == 1 && dados.first()) {
 
                 if (jTable1.getRowCount() > 1 && jTable1.getValueAt(selecao, 0) != null
                         && !jTable1.getValueAt(selecao, 0).equals(nomeModalidade)
@@ -446,6 +458,7 @@ public class AdmTelaCriarCertificado extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AdmTelaCriarCertificado.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

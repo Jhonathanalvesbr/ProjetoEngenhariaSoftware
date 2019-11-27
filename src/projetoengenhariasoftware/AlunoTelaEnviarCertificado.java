@@ -9,8 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-/*import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;*/
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -296,16 +296,31 @@ public class AlunoTelaEnviarCertificado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jLblInicialAncestorAdded
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        boolean verificaInteiro;
+        try{
+            int horas = Integer.parseInt(jTextField1.getText());
+                verificaInteiro = true;
+            }catch(Exception e){
+                verificaInteiro = false;
+}
         if(jTextField1.getText().equals(""))
         {
             JOptionPane.showMessageDialog(null, "Digite a quantidade de horas do certificado.");
         }
+        else if(verificaInteiro == false)
+        {
+            JOptionPane.showMessageDialog(null, "As horas do certificado deve conter somente números.");
+        }
+        else if(jTextField2.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Selecione um certificado.");
+        }
         else
         {
             // TODO add your handling code here:
-        /*DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
-        LocalDateTime now = LocalDateTime.now();*/
-        String data =  "2019/08/10";//(String) dtf.format(now);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+        LocalDateTime now = LocalDateTime.now();
+        String data =  (String) dtf.format(now);
         int idAluno = conexao.getIdAluno(nome);
         int idModalidade= conexao.getIdModalidade(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
         String horas = jTextField1.getText();

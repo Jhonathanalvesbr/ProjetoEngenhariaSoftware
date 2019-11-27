@@ -5,6 +5,8 @@
  */
 package projetoengenhariasoftware;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -460,6 +462,36 @@ public class ResponsavelTelaCertificado extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        Ftp ftp = new Ftp();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String nomeAluno = (String) model.getValueAt(jTable1.getSelectedRow(), 1);
+        String modalidade = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        
+        int idAluno = conexao.getIdAluno(nomeAluno);
+        ftp.conectar(""+idAluno);
+        String s = System.getProperty("user.home") + "\\Downloads\\";
+        new File(s+"\\"+nomeAluno).mkdir();
+        new File(s+"\\"+nomeAluno+"\\"+modalidade).mkdir();
+        s = s+nomeAluno+"\\"+modalidade+"\\";
+        int selecao = jTable1.getSelectedRow();
+        int x = 0; 
+        for(int i = 0; i < selecao; i++)
+        {
+            String nome = (String) model.getValueAt(i, 1);
+            if(nome.equals(nomeAluno))
+            {
+                x++;
+            }
+        }
+        System.out.println(x);
+        
+        try {
+            ftp.download(s,""+idAluno, x,jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"/");
+            Runtime.getRuntime().exec("explorer "+s);
+        } catch (IOException ex) {
+            Logger.getLogger(AlunoTelaVisualizarHora.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
